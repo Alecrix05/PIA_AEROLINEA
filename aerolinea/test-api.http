@@ -1,0 +1,326 @@
+### Ver todos los clientes
+GET http://localhost:8080/api/clientes
+Content-Type: application/json
+
+### Agregar un cliente nuevo
+POST http://localhost:8080/api/clientes
+Content-Type: application/json
+
+{
+  "nombre": "Alejandro",
+  "apellidoP": "Jiménez",
+  "apellidoM": "García",
+  "telefono": "8341234567",
+  "correo": "alejandro@gmail.com",
+  "calle": "Primavera",
+  "numero": "23",
+  "colonia": "Centro",
+  "ciudad": "Ciudad Victoria",
+  "estado": "Tamaulipas",
+  "codigoPostal": "87000"
+}
+
+### Reserva de un cliente
+GET http://localhost:8080/api/reservas
+Content-Type: application/json
+
+### 
+POST http://localhost:8080/api/reservas
+Content-Type: application/json
+
+{
+  "codigoReserva": "ABC123",
+  "fechaReserva": "2025-01-15",
+  "estado": "PENDIENTE",
+  "cliente": { "idCliente": 3 }
+}
+
+### AQUI SI
+############################################
+### CLIENTES
+############################################
+
+### Obtener todos los clientes
+GET http://localhost:8080/api/clientes
+
+### Crear cliente nuevo
+POST http://localhost:8080/api/clientes
+Content-Type: application/json
+
+{
+  "nombre": "Pedro",
+  "apellidoP": "Ramírez",
+  "apellidoM": "Lopez",
+  "telefono": "5551234567",
+  "correo": "pedro@gmail.com",
+  "calle": "Av. Siempre Viva",
+  "numero": "742",
+  "colonia": "Centro",
+  "ciudad": "CDMX",
+  "estado": "CDMX",
+  "codigoPostal": "12345"
+}
+
+############################################
+### RESERVAS
+############################################
+
+GET http://localhost:8080/api/reservas
+###
+POST http://localhost:8080/api/reservas
+Content-Type: application/json
+
+{
+  "codigoReserva": "ABC123",
+  "fechaReserva": "2025-01-15",
+  "estado": "PENDIENTE",
+  "cliente": { "idCliente": 4 }
+}
+
+############################################
+### PAGOS
+############################################
+
+GET http://localhost:8080/api/pagos
+
+###
+POST http://localhost:8080/api/pagos
+Content-Type: application/json
+
+{
+  "metodoPago": "TARJETA",
+  "monto": 1500.50,
+  "fechaPago": "2025-02-10",
+  "estatus": "CONFIRMADO",
+  "venta": { "idVenta": 1 }
+}
+
+############################################
+### VENTA ENCABEZADO
+############################################
+
+GET http://localhost:8080/api/ventas
+
+###
+POST http://localhost:8080/api/ventas
+Content-Type: application/json
+
+{
+  "fechaVenta": "2025-01-18",
+  "formaPago": "TARJETA",
+  "canalVenta": "WEB",
+  "total": 2500.00,
+  "estadoVenta": "COMPLETADO",
+  "cliente": { "idCliente": 4 }
+}
+
+############################################
+### PASAJEROS
+############################################
+
+GET http://localhost:8080/api/pasajeros
+###
+POST http://localhost:8080/api/pasajeros
+Content-Type: application/json
+
+{
+  "nombre": "Luis",
+  "apellidoP": "Pérez",
+  "apellidoM": "Gómez",
+  "fechaNacimiento": "1990-05-12",
+  "nacionalidad": "Mexicana",
+  "pasaporte": "X1234567",
+  "cliente": { "idCliente": 4 }
+}
+
+############################################
+### CIUDADES
+############################################
+
+GET http://localhost:8080/api/ciudades
+###
+
+POST http://localhost:8080/api/ciudades
+Content-Type: application/json
+
+{
+  "nombreCiudad": "Monterrey",
+  "estado": "Nuevo León",
+  "pais": "México"
+}
+
+############################################
+### AEROPUERTOS
+############################################
+
+GET http://localhost:8080/api/aeropuertos
+
+###
+POST http://localhost:8080/api/aeropuertos
+Content-Type: application/json
+
+{
+  "nombre": "Aeropuerto Internacional MTY",
+  "codigoIATA": "MTY",
+  "ciudad": { "idCiudad": 1 }
+}
+
+############################################
+### AVIONES
+############################################
+
+GET http://localhost:8080/api/aviones
+###
+
+POST http://localhost:8080/api/aviones
+Content-Type: application/json
+
+{
+  "matricula": "XA-123",
+  "modelo": "Airbus A320",
+  "capacidad": 180,
+  "estadoOperativo": "ACTIVO"
+}
+
+############################################
+### DEPARTAMENTOS
+############################################
+
+GET http://localhost:8080/api/departamentos
+###
+
+POST http://localhost:8080/api/departamentos
+Content-Type: application/json
+
+{
+  "nombreDepartamento": "Operaciones",
+  "descripcion": "Área encargada de vuelos"
+}
+
+############################################
+### EMPLEADOS
+############################################
+
+GET http://localhost:8080/api/empleados
+
+###
+POST http://localhost:8080/api/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellidoP": "Ruiz",
+  "apellidoM": "Fernández",
+  "puesto": "Piloto",
+  "salario": 35000,
+  "fechaContratacion": "2020-05-01",
+  "departamento": { "idDepartamento": 1 }
+}
+
+############################################
+### TRIPULACIÓN
+############################################
+
+GET http://localhost:8080/api/tripulaciones
+
+###
+POST http://localhost:8080/api/tripulaciones
+Content-Type: application/json
+
+{
+  "nombreTripulacion": "Tripulación Alfa",
+  "piloto": { "idEmpleado": 1 },
+  "copiloto": { "idEmpleado": 1 }
+}
+
+############################################
+### RUTAS
+############################################
+
+GET http://localhost:8080/api/rutas
+
+###
+POST http://localhost:8080/api/rutas
+Content-Type: application/json
+
+{
+  "distancia": 900.50,
+  "origen": { "idAeropuerto": 1 },
+  "destino": { "idAeropuerto": 1 }
+}
+
+############################################
+### VUELOS
+############################################
+
+GET http://localhost:8080/api/vuelos
+###
+
+POST http://localhost:8080/api/vuelos
+Content-Type: application/json
+
+{
+  "numeroVuelo": "AM123",
+  "duracion": "02:30:00",
+  "ruta": { "idRuta": 1 }
+}
+
+############################################
+### INSTANCIAS DE VUELO
+############################################
+
+GET http://localhost:8080/api/instancias-vuelo
+
+###
+POST http://localhost:8080/api/instancias-vuelo
+Content-Type: application/json
+
+{
+  "fechaSalida": "2024-06-01T10:00:00",
+  "fechaLlegada": "2024-06-01T12:30:00",
+  "estadoVuelo": "PROGRAMADO",
+  "vuelo": { "idVuelo": 1 },
+  "avion": { "idAvion": 1 },
+  "tripulacion": { "idTripulacion": 1 }
+}
+
+############################################
+### BOLETOS
+############################################
+
+GET http://localhost:8080/api/boletos
+###
+
+POST http://localhost:8080/api/boletos
+Content-Type: application/json
+
+{
+  "numeroBoleto": "BLT12345",
+  "fechaEmision": "2025-03-01",
+  "precio": 2000,
+  "clase": "ECONOMICA",
+  "asiento": "12A",
+  "estado": "ACTIVO",
+  "pasajero": { "idPasajero": 2 },
+  "reserva": { "idReserva": 4 },
+  "instanciaVuelo": { "idInstanciaVuelo": 1 }
+}
+
+############################################
+### VENTA DETALLE
+############################################
+
+GET http://localhost:8080/api/venta-detalle
+
+###
+POST http://localhost:8080/api/venta-detalle
+Content-Type: application/json
+
+{
+  "precioUnitario": 1500,
+  "impuestos": 240,
+  "subtotal": 1740,
+  "venta": { "idVenta": 1 },
+  "boleto": { "idBoleto": 1 }
+}
+

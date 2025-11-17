@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerolínea Carrillo - Sistema Administrativo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark sticky-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="fas fa-plane"></i>
+                Aerolínea Carrillo - Sistema Administrativo
+            </span>
+            <span class="navbar-text text-white">
+                <i class="fas fa-user-circle"></i> Empleado
+            </span>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2">
+                <div class="sidebar">
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action active" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('clientes')">
+                            <i class="fas fa-users"></i> Clientes
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('pasajeros')">
+                            <i class="fas fa-user-friends"></i> Pasajeros
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('vuelos')">
+                            <i class="fas fa-plane-departure"></i> Vuelos
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('instancias')">
+                            <i class="fas fa-calendar-alt"></i> Instancias Vuelo
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('reservas')">
+                            <i class="fas fa-bookmark"></i> Reservas
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('boletos')">
+                            <i class="fas fa-ticket-alt"></i> Boletos
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('ventas')">
+                            <i class="fas fa-shopping-cart"></i> Ventas
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('busqueda')">
+                            <i class="fas fa-search"></i> Búsqueda Vuelos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="content-section">
+                    <h2 class="mb-4"><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-users"></i> Clientes</h5>
+                                    <h2 id="totalClientes">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-danger">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-bookmark"></i> Reservas</h5>
+                                    <h2 id="totalReservas">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-ticket-alt"></i> Boletos</h5>
+                                    <h2 id="totalBoletos">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-white bg-danger">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-plane"></i> Vuelos Activos</h5>
+                                    <h2 id="totalVuelos">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clientes Section -->
+                <div id="clientes" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-users"></i> Gestión de Clientes</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-user-plus"></i> Nuevo Cliente
+                        </div>
+                        <div class="card-body">
+                            <form id="formCliente" novalidate>
+                                <h5 class="mb-3 text-primary">Datos Personales</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre *</label>
+                                            <input type="text" class="form-control" name="nombre" id="clienteNombre" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Paterno *</label>
+                                            <input type="text" class="form-control" name="apellidoP" id="clienteApellidoP" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Materno</label>
+                                            <input type="text" class="form-control" name="apellidoM" id="clienteApellidoM" maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="mb-3 text-primary">Contacto</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Correo Electrónico *</label>
+                                            <input type="email" class="form-control" name="correo" id="clienteCorreo" maxlength="100" required>
+                                            <small class="form-text text-muted">Debe ser un correo válido</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Teléfono</label>
+                                            <input type="tel" class="form-control" name="telefono" id="clienteTelefono" pattern="[0-9]{10,15}" maxlength="15">
+                                            <small class="form-text text-muted">10-15 dígitos numéricos</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="mb-3 text-primary">Dirección</h5>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label class="form-label">Calle</label>
+                                            <input type="text" class="form-control" name="calle" id="clienteCalle" maxlength="100">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Número</label>
+                                            <input type="text" class="form-control" name="numero" id="clienteNumero" maxlength="10" placeholder="Ej: 123, S/N">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Colonia</label>
+                                            <input type="text" class="form-control" name="colonia" id="clienteColonia" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Ciudad</label>
+                                            <input type="text" class="form-control" name="ciudad" id="clienteCiudad" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Estado</label>
+                                            <input type="text" class="form-control" name="estado" id="clienteEstado" maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Código Postal</label>
+                                            <input type="text" class="form-control" name="codigoPostal" id="clienteCodigoPostal" maxlength="10" placeholder="Ej: 12345">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Cliente
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetClienteForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Clientes
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarCliente" placeholder="Buscar por nombre, correo o ciudad...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre Completo</th>
+                                            <th>Email</th>
+                                            <th>Teléfono</th>
+                                            <th>Ciudad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaClientes"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pasajeros Section -->
+                <div id="pasajeros" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-user-friends"></i> Gestión de Pasajeros</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-user-plus"></i> Nuevo Pasajero
+                        </div>
+                        <div class="card-body">
+                            <form id="formPasajero" novalidate>
+                                <h5 class="mb-3 text-primary">Datos Personales</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre *</label>
+                                            <input type="text" class="form-control" id="pasajeroNombre" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Paterno *</label>
+                                            <input type="text" class="form-control" id="pasajeroApellidoP" maxlength="50" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Materno</label>
+                                            <input type="text" class="form-control" id="pasajeroApellidoM" maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="mb-3 text-primary">Información Adicional</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de Nacimiento *</label>
+                                            <input type="date" class="form-control" id="pasajeroFechaNac" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nacionalidad</label>
+                                            <input type="text" class="form-control" id="pasajeroNacionalidad" maxlength="50" placeholder="Ej: Mexicana">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pasaporte</label>
+                                            <input type="text" class="form-control" id="pasajeroPasaporte" maxlength="50" placeholder="Ej: A12345678">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Pasajero
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetPasajeroForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Pasajeros
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarPasajero" placeholder="Buscar por nombre, pasaporte o nacionalidad...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre Completo</th>
+                                            <th>Pasaporte</th>
+                                            <th>Fecha Nacimiento</th>
+                                            <th>Nacionalidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaPasajeros"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vuelos Section -->
+                <div id="vuelos" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-plane-departure"></i> Gestión de Vuelos</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-plus"></i> Nuevo Vuelo
+                        </div>
+                        <div class="card-body">
+                            <form id="formVuelo" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Número de Vuelo *</label>
+                                            <input type="text" class="form-control" id="vueloNumero" maxlength="20" placeholder="Ej: AA123" required>
+                                            <small class="form-text text-muted">Código único del vuelo</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Ruta</label>
+                                            <select class="form-control" id="vueloRuta">
+                                                <option value="">Seleccione una ruta (opcional)</option>
+                                            </select>
+                                            <small class="form-text text-muted">Origen → Destino</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Duración</label>
+                                            <input type="text" class="form-control" id="vueloDuracion" placeholder="HH:MM:SS (ej: 02:30:00)">
+                                            <small class="form-text text-muted">Formato: HH:MM:SS</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Vuelo
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetVueloForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Vuelos
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarVuelo" placeholder="Buscar por número de vuelo o duración...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Número Vuelo</th>
+                                            <th>Ruta</th>
+                                            <th>Duración</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaVuelos"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instancias Vuelo Section -->
+                <div id="instancias" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-calendar-alt"></i> Gestión de Instancias de Vuelo</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-plus"></i> Nueva Instancia de Vuelo
+                        </div>
+                        <div class="card-body">
+                            <form id="formInstancia" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Vuelo *</label>
+                                            <select class="form-control" id="instanciaVuelo" required>
+                                                <option value="">Seleccione un vuelo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Avión *</label>
+                                            <select class="form-control" id="instanciaAvion" required>
+                                                <option value="">Seleccione un avión</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha y Hora de Salida *</label>
+                                            <input type="datetime-local" class="form-control" id="instanciaFechaSalida" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha y Hora de Llegada *</label>
+                                            <input type="datetime-local" class="form-control" id="instanciaFechaLlegada" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Estado *</label>
+                                            <select class="form-control" id="instanciaEstado" required>
+                                                <option value="PROGRAMADO">Programado</option>
+                                                <option value="EN_VUELO">En Vuelo</option>
+                                                <option value="COMPLETADO">Completado</option>
+                                                <option value="CANCELADO">Cancelado</option>
+                                                <option value="RETRASADO">Retrasado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Instancia
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetInstanciaForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Instancias
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarInstancia" placeholder="Buscar por vuelo, avión o estado...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Vuelo</th>
+                                            <th>Avión</th>
+                                            <th>Fecha Salida</th>
+                                            <th>Fecha Llegada</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaInstancias"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reservas Section -->
+                <div id="reservas" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-bookmark"></i> Gestión de Reservas</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-plus"></i> Nueva Reserva
+                        </div>
+                        <div class="card-body">
+                            <form id="formReserva" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Código de Reserva *</label>
+                                            <input type="text" class="form-control" id="reservaCodigo" maxlength="20" required readonly>
+                                            <small class="form-text text-muted">Se genera automáticamente</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Cliente *</label>
+                                            <select class="form-control" id="reservaCliente" required>
+                                                <option value="">Seleccione un cliente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de Reserva *</label>
+                                            <input type="date" class="form-control" id="reservaFecha" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Estado *</label>
+                                            <select class="form-control" id="reservaEstado" required>
+                                                <option value="PENDIENTE">Pendiente</option>
+                                                <option value="CONFIRMADA">Confirmada</option>
+                                                <option value="CANCELADA">Cancelada</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Reserva
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetReservaForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Reservas
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarReserva" placeholder="Buscar por código, cliente o estado...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Código</th>
+                                            <th>Cliente</th>
+                                            <th>Fecha Reserva</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaReservas"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boletos Section -->
+                <div id="boletos" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-ticket-alt"></i> Gestión de Boletos</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-plus"></i> Nuevo Boleto
+                        </div>
+                        <div class="card-body">
+                            <form id="formBoleto" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Número de Boleto *</label>
+                                            <input type="text" class="form-control" id="boletoNumero" maxlength="30" required readonly>
+                                            <small class="form-text text-muted">Se genera automáticamente</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pasajero *</label>
+                                            <select class="form-control" id="boletoPasajero" required>
+                                                <option value="">Seleccione un pasajero</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Reserva</label>
+                                            <select class="form-control" id="boletoReserva">
+                                                <option value="">Seleccione una reserva (opcional)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Instancia de Vuelo</label>
+                                            <select class="form-control" id="boletoInstancia">
+                                                <option value="">Seleccione una instancia (opcional)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de Emisión *</label>
+                                            <input type="date" class="form-control" id="boletoFecha" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Precio *</label>
+                                            <input type="number" step="0.01" class="form-control" id="boletoPrecio" placeholder="0.00" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Clase *</label>
+                                            <select class="form-control" id="boletoClase" required>
+                                                <option value="ECONOMICA">Económica</option>
+                                                <option value="EJECUTIVA">Ejecutiva</option>
+                                                <option value="PRIMERA">Primera Clase</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Estado *</label>
+                                            <select class="form-control" id="boletoEstado" required>
+                                                <option value="EMITIDO">Emitido</option>
+                                                <option value="USADO">Usado</option>
+                                                <option value="CANCELADO">Cancelado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Guardar Boleto
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetBoletoForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Lista de Boletos
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarBoleto" placeholder="Buscar por número, pasajero, clase o estado...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Número</th>
+                                            <th>Pasajero</th>
+                                            <th>Fecha Emisión</th>
+                                            <th>Precio</th>
+                                            <th>Clase</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaBoletos"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ventas Section -->
+                <div id="ventas" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-shopping-cart"></i> Gestión de Ventas</h2>
+                    
+                    <div class="card mb-4">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-plus-circle"></i> Registrar Nueva Venta
+                        </div>
+                        <div class="card-body">
+                            <form id="formVenta">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="ventaCliente" class="form-label">Cliente *</label>
+                                            <select class="form-select" id="ventaCliente" required>
+                                                <option value="">Seleccione un cliente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="ventaFecha" class="form-label">Fecha de Venta *</label>
+                                            <input type="date" class="form-control" id="ventaFecha" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="ventaFormaPago" class="form-label">Forma de Pago *</label>
+                                            <select class="form-select" id="ventaFormaPago" required>
+                                                <option value="">Seleccione...</option>
+                                                <option value="EFECTIVO">Efectivo</option>
+                                                <option value="TARJETA_CREDITO">Tarjeta de Crédito</option>
+                                                <option value="TARJETA_DEBITO">Tarjeta de Débito</option>
+                                                <option value="TRANSFERENCIA">Transferencia</option>
+                                                <option value="PAYPAL">PayPal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="ventaCanal" class="form-label">Canal de Venta</label>
+                                            <select class="form-select" id="ventaCanal">
+                                                <option value="">Seleccione...</option>
+                                                <option value="WEB">Web</option>
+                                                <option value="PRESENCIAL">Presencial</option>
+                                                <option value="TELEFONO">Teléfono</option>
+                                                <option value="MOVIL">Móvil</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="ventaTotal" class="form-label">Total *</label>
+                                            <input type="number" class="form-control" id="ventaTotal" step="0.01" min="0" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="ventaEstado" class="form-label">Estado *</label>
+                                            <select class="form-select" id="ventaEstado" required>
+                                                <option value="PENDIENTE">Pendiente</option>
+                                                <option value="COMPLETADA">Completada</option>
+                                                <option value="CANCELADA">Cancelada</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-save"></i> Guardar Venta
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="resetVentaForm()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-list"></i> Historial de Ventas
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    <input type="text" class="form-control" id="buscarVenta" placeholder="Buscar por cliente, estado o forma de pago...">
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Cliente</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Forma Pago</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaVentas"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Búsqueda Section -->
+                <div id="busqueda" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-search"></i> Búsqueda de Vuelos</h2>
+                    
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-search"></i> Buscar Vuelos Disponibles
+                        </div>
+                        <div class="card-body">
+                            <form id="formBusqueda">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Origen</label>
+                                            <input type="text" class="form-control" name="origen" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Destino</label>
+                                            <input type="text" class="form-control" name="destino" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha</label>
+                                            <input type="date" class="form-control" name="fecha" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> Buscar Vuelos
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4" id="resultadosBusqueda" style="display:none;">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-plane"></i> Resultados de Búsqueda
+                        </div>
+                        <div class="card-body">
+                            <div id="listaResultados"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Config & API -->
+    <script src="config.js"></script>
+    <!-- Main JS -->
+    <script src="main.js"></script>
+    <!-- Modules -->
+    <script src="clientes.js"></script>
+    <script src="pasajeros.js"></script>
+    <script src="vuelos.js"></script>
+    <script src="instancias.js"></script>
+    <script src="reservas.js"></script>
+    <script src="boletos.js"></script>
+    <script src="ventas.js"></script>
+    <script src="busqueda.js"></script>
+</body>
+</html>

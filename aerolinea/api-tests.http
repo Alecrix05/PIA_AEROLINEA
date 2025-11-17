@@ -1,0 +1,1027 @@
+############################################
+### ARCHIVO DE PRUEBAS API - SISTEMA DE VENTA DE BOLETOS DE AVIÓN
+### Orden recomendado de ejecución para evitar errores de FK
+############################################
+
+@baseUrl = http://localhost:8080/api
+
+############################################
+### 1. DEPARTAMENTOS
+############################################
+
+### Obtener todos los departamentos
+GET {{baseUrl}}/departamentos
+
+### Crear departamento
+POST {{baseUrl}}/departamentos
+Content-Type: application/json
+
+{
+  "nombreDepartamento": "Operaciones",
+  "descripcion": "Área encargada de operaciones de vuelo"
+}
+
+### Crear departamento - Mantenimiento
+POST {{baseUrl}}/departamentos
+Content-Type: application/json
+
+{
+  "nombreDepartamento": "Mantenimiento",
+  "descripcion": "Área de mantenimiento de aeronaves"
+}
+
+############################################
+### 2. EMPLEADOS
+############################################
+
+### Obtener todos los empleados
+GET {{baseUrl}}/empleados
+
+### Crear empleado - Piloto
+POST {{baseUrl}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellidoP": "Ruiz",
+  "apellidoM": "Fernández",
+  "puesto": "Piloto",
+  "salario": 45000,
+  "fechaContratacion": "2020-05-01",
+  "departamento": { "idDepartamento": 1 }
+}
+
+### Crear empleado - Copiloto
+POST {{baseUrl}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellidoP": "López",
+  "apellidoM": "García",
+  "puesto": "Copiloto",
+  "salario": 38000,
+  "fechaContratacion": "2021-03-15",
+  "departamento": { "idDepartamento": 1 }
+}
+
+### Crear empleado - Sobrecargo
+POST {{baseUrl}}/empleados
+Content-Type: application/json
+
+{
+  "nombre": "Ana",
+  "apellidoP": "Martínez",
+  "apellidoM": "Sánchez",
+  "puesto": "Sobrecargo",
+  "salario": 25000,
+  "fechaContratacion": "2022-01-10",
+  "departamento": { "idDepartamento": 1 }
+}
+
+############################################
+### 3. TRIPULACIÓN
+############################################
+
+### Obtener todas las tripulaciones
+GET {{baseUrl}}/tripulaciones
+
+### Crear tripulación
+POST {{baseUrl}}/tripulaciones
+Content-Type: application/json
+
+{
+  "nombreTripulacion": "Tripulación Alfa",
+  "piloto": { "idEmpleado": 1 },
+  "copiloto": { "idEmpleado": 2 }
+}
+
+### Crear tripulación Beta
+POST {{baseUrl}}/tripulaciones
+Content-Type: application/json
+
+{
+  "nombreTripulacion": "Tripulación Beta",
+  "piloto": { "idEmpleado": 1 },
+  "copiloto": { "idEmpleado": 2 }
+}
+
+############################################
+### 4. CIUDADES
+############################################
+
+### Obtener todas las ciudades
+GET {{baseUrl}}/ciudades
+
+### Crear ciudad - CDMX
+POST {{baseUrl}}/ciudades
+Content-Type: application/json
+
+{
+  "nombreCiudad": "Ciudad de México",
+  "estado": "CDMX",
+  "pais": "México"
+}
+
+### Crear ciudad - Monterrey
+POST {{baseUrl}}/ciudades
+Content-Type: application/json
+
+{
+  "nombreCiudad": "Monterrey",
+  "estado": "Nuevo León",
+  "pais": "México"
+}
+
+### Crear ciudad - Guadalajara
+POST {{baseUrl}}/ciudades
+Content-Type: application/json
+
+{
+  "nombreCiudad": "Guadalajara",
+  "estado": "Jalisco",
+  "pais": "México"
+}
+
+### Crear ciudad - Cancún
+POST {{baseUrl}}/ciudades
+Content-Type: application/json
+
+{
+  "nombreCiudad": "Cancún",
+  "estado": "Quintana Roo",
+  "pais": "México"
+}
+
+############################################
+### 5. AEROPUERTOS
+############################################
+
+### Obtener todos los aeropuertos
+GET {{baseUrl}}/aeropuertos
+
+### Crear aeropuerto - CDMX
+POST {{baseUrl}}/aeropuertos
+Content-Type: application/json
+
+{
+  "nombre": "Aeropuerto Internacional Benito Juárez",
+  "codigoIATA": "MEX",
+  "ciudad": { "idCiudad": 1 }
+}
+
+### Crear aeropuerto - Monterrey
+POST {{baseUrl}}/aeropuertos
+Content-Type: application/json
+
+{
+  "nombre": "Aeropuerto Internacional de Monterrey",
+  "codigoIATA": "MTY",
+  "ciudad": { "idCiudad": 2 }
+}
+
+### Crear aeropuerto - Guadalajara
+POST {{baseUrl}}/aeropuertos
+Content-Type: application/json
+
+{
+  "nombre": "Aeropuerto Internacional Miguel Hidalgo",
+  "codigoIATA": "GDL",
+  "ciudad": { "idCiudad": 3 }
+}
+
+### Crear aeropuerto - Cancún
+POST {{baseUrl}}/aeropuertos
+Content-Type: application/json
+
+{
+  "nombre": "Aeropuerto Internacional de Cancún",
+  "codigoIATA": "CUN",
+  "ciudad": { "idCiudad": 4 }
+}
+
+############################################
+### 6. RUTAS
+############################################
+
+### Obtener todas las rutas
+GET {{baseUrl}}/rutas
+
+### Crear ruta MEX-MTY
+POST {{baseUrl}}/rutas
+Content-Type: application/json
+
+{
+  "distancia": 920.5,
+  "origen": { "idAeropuerto": 1 },
+  "destino": { "idAeropuerto": 2 }
+}
+
+### Crear ruta MEX-GDL
+POST {{baseUrl}}/rutas
+Content-Type: application/json
+
+{
+  "distancia": 545.3,
+  "origen": { "idAeropuerto": 1 },
+  "destino": { "idAeropuerto": 3 }
+}
+
+### Crear ruta MEX-CUN
+POST {{baseUrl}}/rutas
+Content-Type: application/json
+
+{
+  "distancia": 1565.0,
+  "origen": { "idAeropuerto": 1 },
+  "destino": { "idAeropuerto": 4 }
+}
+
+############################################
+### 7. VUELOS
+############################################
+
+### Obtener todos los vuelos
+GET {{baseUrl}}/vuelos
+
+### Crear vuelo MEX-MTY
+POST {{baseUrl}}/vuelos
+Content-Type: application/json
+
+{
+  "numeroVuelo": "AM101",
+  "duracion": "01:45:00",
+  "ruta": { "idRuta": 1 }
+}
+
+### Crear vuelo MEX-GDL
+POST {{baseUrl}}/vuelos
+Content-Type: application/json
+
+{
+  "numeroVuelo": "AM202",
+  "duracion": "01:15:00",
+  "ruta": { "idRuta": 2 }
+}
+
+### Crear vuelo MEX-CUN
+POST {{baseUrl}}/vuelos
+Content-Type: application/json
+
+{
+  "numeroVuelo": "AM303",
+  "duracion": "02:30:00",
+  "ruta": { "idRuta": 3 }
+}
+
+############################################
+### 8. AVIONES
+############################################
+
+### Obtener todos los aviones
+GET {{baseUrl}}/aviones
+
+### Crear avión
+POST {{baseUrl}}/aviones
+Content-Type: application/json
+
+{
+  "matricula": "XA-ABC",
+  "modelo": "Boeing 737-800",
+  "capacidad": 189,
+  "estadoOperativo": "ACTIVO"
+}
+
+### Crear avión 2
+POST {{baseUrl}}/aviones
+Content-Type: application/json
+
+{
+  "matricula": "XA-DEF",
+  "modelo": "Airbus A320",
+  "capacidad": 180,
+  "estadoOperativo": "ACTIVO"
+}
+
+### Crear avión 3
+POST {{baseUrl}}/aviones
+Content-Type: application/json
+
+{
+  "matricula": "XA-GHI",
+  "modelo": "Embraer E190",
+  "capacidad": 114,
+  "estadoOperativo": "MANTENIMIENTO"
+}
+
+############################################
+### 9. ASIENTOS
+############################################
+
+### Obtener todos los asientos
+GET {{baseUrl}}/asientos
+
+### Crear asiento - 1A Ejecutiva
+POST {{baseUrl}}/asientos
+Content-Type: application/json
+
+{
+  "avion": { "idAvion": 1 },
+  "codigoAsiento": "1A",
+  "fila": 1,
+  "columna": "A",
+  "clase": "Ejecutiva",
+  "ubicacion": "Ventana"
+}
+
+### Crear asiento - 1B Ejecutiva
+POST {{baseUrl}}/asientos
+Content-Type: application/json
+
+{
+  "avion": { "idAvion": 1 },
+  "codigoAsiento": "1B",
+  "fila": 1,
+  "columna": "B",
+  "clase": "Ejecutiva",
+  "ubicacion": "Pasillo"
+}
+
+### Crear asiento - 12A Económica
+POST {{baseUrl}}/asientos
+Content-Type: application/json
+
+{
+  "avion": { "idAvion": 1 },
+  "codigoAsiento": "12A",
+  "fila": 12,
+  "columna": "A",
+  "clase": "Económica",
+  "ubicacion": "Ventana"
+}
+
+### Crear asiento - 12B Económica
+POST {{baseUrl}}/asientos
+Content-Type: application/json
+
+{
+  "avion": { "idAvion": 1 },
+  "codigoAsiento": "12B",
+  "fila": 12,
+  "columna": "B",
+  "clase": "Económica",
+  "ubicacion": "Centro"
+}
+
+### Crear asiento - 12C Económica
+POST {{baseUrl}}/asientos
+Content-Type: application/json
+
+{
+  "avion": { "idAvion": 1 },
+  "codigoAsiento": "12C",
+  "fila": 12,
+  "columna": "C",
+  "clase": "Económica",
+  "ubicacion": "Pasillo"
+}
+
+############################################
+### 10. INSTANCIAS DE VUELO
+############################################
+
+### Obtener todas las instancias de vuelo
+GET {{baseUrl}}/instancias-vuelo
+
+### Crear instancia de vuelo
+POST {{baseUrl}}/instancias-vuelo
+Content-Type: application/json
+
+{
+  "fechaSalida": "2025-06-15T08:00:00",
+  "fechaLlegada": "2025-06-15T09:45:00",
+  "estadoVuelo": "PROGRAMADO",
+  "vuelo": { "idVuelo": 1 },
+  "avion": { "idAvion": 1 },
+  "tripulacion": { "idTripulacion": 1 }
+}
+
+### Crear instancia de vuelo 2
+POST {{baseUrl}}/instancias-vuelo
+Content-Type: application/json
+
+{
+  "fechaSalida": "2025-06-16T14:00:00",
+  "fechaLlegada": "2025-06-16T15:15:00",
+  "estadoVuelo": "PROGRAMADO",
+  "vuelo": { "idVuelo": 2 },
+  "avion": { "idAvion": 2 },
+  "tripulacion": { "idTripulacion": 1 }
+}
+
+### Crear instancia de vuelo 3
+POST {{baseUrl}}/instancias-vuelo
+Content-Type: application/json
+
+{
+  "fechaSalida": "2025-06-20T10:30:00",
+  "fechaLlegada": "2025-06-20T13:00:00",
+  "estadoVuelo": "PROGRAMADO",
+  "vuelo": { "idVuelo": 3 },
+  "avion": { "idAvion": 1 },
+  "tripulacion": { "idTripulacion": 1 }
+}
+
+############################################
+### 11. CLIENTES
+############################################
+
+### Obtener todos los clientes
+GET {{baseUrl}}/clientes
+
+### Crear cliente
+POST {{baseUrl}}/clientes
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellidoP": "Pérez",
+  "apellidoM": "González",
+  "telefono": "5551234567",
+  "correo": "juan.perez@email.com",
+  "calle": "Av. Insurgentes",
+  "numero": "1234",
+  "colonia": "Roma Norte",
+  "ciudad": "Ciudad de México",
+  "estado": "CDMX",
+  "codigoPostal": "06700"
+}
+
+### Crear cliente 2
+POST {{baseUrl}}/clientes
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellidoP": "García",
+  "apellidoM": "Rodríguez",
+  "telefono": "8181234567",
+  "correo": "maria.garcia@email.com",
+  "calle": "Av. Constitución",
+  "numero": "567",
+  "colonia": "Centro",
+  "ciudad": "Monterrey",
+  "estado": "Nuevo León",
+  "codigoPostal": "64000"
+}
+
+### Crear cliente 3
+POST {{baseUrl}}/clientes
+Content-Type: application/json
+
+{
+  "nombre": "Pedro",
+  "apellidoP": "Ramírez",
+  "apellidoM": "López",
+  "telefono": "3331234567",
+  "correo": "pedro.ramirez@email.com",
+  "calle": "Av. Chapultepec",
+  "numero": "890",
+  "colonia": "Americana",
+  "ciudad": "Guadalajara",
+  "estado": "Jalisco",
+  "codigoPostal": "44100"
+}
+
+############################################
+### 12. PASAJEROS
+############################################
+
+### Obtener todos los pasajeros
+GET {{baseUrl}}/pasajeros
+
+### Crear pasajero
+POST {{baseUrl}}/pasajeros
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellidoP": "Pérez",
+  "apellidoM": "González",
+  "fechaNacimiento": "1985-03-15",
+  "nacionalidad": "Mexicana",
+  "cliente": { "idCliente": 1 }
+}
+
+### Crear pasajero 2
+POST {{baseUrl}}/pasajeros
+Content-Type: application/json
+
+{
+  "nombre": "María",
+  "apellidoP": "García",
+  "apellidoM": "Rodríguez",
+  "fechaNacimiento": "1990-07-22",
+  "nacionalidad": "Mexicana",
+  "cliente": { "idCliente": 2 }
+}
+
+### Crear pasajero 3 - Menor
+POST {{baseUrl}}/pasajeros
+Content-Type: application/json
+
+{
+  "nombre": "Luis",
+  "apellidoP": "Pérez",
+  "apellidoM": "García",
+  "fechaNacimiento": "2015-11-10",
+  "nacionalidad": "Mexicana",
+  "cliente": { "idCliente": 1 }
+}
+
+############################################
+### 13. RESERVAS
+############################################
+
+### Obtener todas las reservas
+GET {{baseUrl}}/reservas
+
+### Crear reserva
+POST {{baseUrl}}/reservas
+Content-Type: application/json
+
+{
+  "codigoReserva": "RES001",
+  "fechaReserva": "2025-05-01",
+  "estado": "CONFIRMADA",
+  "cliente": { "idCliente": 1 }
+}
+
+### Crear reserva 2
+POST {{baseUrl}}/reservas
+Content-Type: application/json
+
+{
+  "codigoReserva": "RES002",
+  "fechaReserva": "2025-05-02",
+  "estado": "PENDIENTE",
+  "cliente": { "idCliente": 2 }
+}
+
+### Crear reserva 3
+POST {{baseUrl}}/reservas
+Content-Type: application/json
+
+{
+  "codigoReserva": "RES003",
+  "fechaReserva": "2025-05-03",
+  "estado": "CONFIRMADA",
+  "cliente": { "idCliente": 1 }
+}
+
+############################################
+### 14. TARIFAS
+############################################
+
+### Obtener todas las tarifas
+GET {{baseUrl}}/tarifas
+
+### Crear tarifa - Económica
+POST {{baseUrl}}/tarifas
+Content-Type: application/json
+
+{
+  "nombre": "Tarifa Económica Básica",
+  "clase": "Económica",
+  "precioBase": 1500.00,
+  "descripcion": "Tarifa básica clase económica",
+  "activo": 1
+}
+
+### Crear tarifa - Ejecutiva
+POST {{baseUrl}}/tarifas
+Content-Type: application/json
+
+{
+  "nombre": "Tarifa Ejecutiva Premium",
+  "clase": "Ejecutiva",
+  "precioBase": 4500.00,
+  "descripcion": "Tarifa clase ejecutiva con beneficios",
+  "activo": 1
+}
+
+### Crear tarifa - Primera
+POST {{baseUrl}}/tarifas
+Content-Type: application/json
+
+{
+  "nombre": "Tarifa Primera Clase",
+  "clase": "Primera",
+  "precioBase": 8500.00,
+  "descripcion": "Tarifa primera clase todo incluido",
+  "activo": 1
+}
+
+############################################
+### 15. BOLETOS
+############################################
+
+### Obtener todos los boletos
+GET {{baseUrl}}/boletos
+
+### Crear boleto
+POST {{baseUrl}}/boletos
+Content-Type: application/json
+
+{
+  "numeroBoleto": "BLT001",
+  "fechaEmision": "2025-05-01",
+  "precio": 1500.00,
+  "clase": "Económica",
+  "estado": "ACTIVO",
+  "asiento": { "idAsiento": 3 },
+  "tarifa": { "idTarifa": 1 },
+  "pasajero": { "idPasajero": 1 },
+  "reserva": { "idReserva": 1 },
+  "instanciaVuelo": { "idInstanciaVuelo": 1 }
+}
+
+### Crear boleto 2
+POST {{baseUrl}}/boletos
+Content-Type: application/json
+
+{
+  "numeroBoleto": "BLT002",
+  "fechaEmision": "2025-05-01",
+  "precio": 1500.00,
+  "clase": "Económica",
+  "estado": "ACTIVO",
+  "asiento": { "idAsiento": 4 },
+  "tarifa": { "idTarifa": 1 },
+  "pasajero": { "idPasajero": 3 },
+  "reserva": { "idReserva": 1 },
+  "instanciaVuelo": { "idInstanciaVuelo": 1 }
+}
+
+### Crear boleto 3 - Ejecutiva
+POST {{baseUrl}}/boletos
+Content-Type: application/json
+
+{
+  "numeroBoleto": "BLT003",
+  "fechaEmision": "2025-05-02",
+  "precio": 4500.00,
+  "clase": "Ejecutiva",
+  "estado": "ACTIVO",
+  "asiento": { "idAsiento": 1 },
+  "tarifa": { "idTarifa": 2 },
+  "pasajero": { "idPasajero": 2 },
+  "reserva": { "idReserva": 2 },
+  "instanciaVuelo": { "idInstanciaVuelo": 2 }
+}
+
+############################################
+### 16. VENTA ENCABEZADO
+############################################
+
+### Obtener todas las ventas
+GET {{baseUrl}}/ventas
+
+### Crear venta encabezado
+POST {{baseUrl}}/ventas
+Content-Type: application/json
+
+{
+  "fechaVenta": "2025-05-01",
+  "formaPago": "TARJETA",
+  "canalVenta": "WEB",
+  "total": 3240.00,
+  "estadoVenta": "COMPLETADO",
+  "cliente": { "idCliente": 1 }
+}
+
+### Crear venta encabezado 2
+POST {{baseUrl}}/ventas
+Content-Type: application/json
+
+{
+  "fechaVenta": "2025-05-02",
+  "formaPago": "TRANSFERENCIA",
+  "canalVenta": "AGENCIA",
+  "total": 4860.00,
+  "estadoVenta": "COMPLETADO",
+  "cliente": { "idCliente": 2 }
+}
+
+############################################
+### 17. VENTA DETALLE
+############################################
+
+### Obtener todos los detalles de venta
+GET {{baseUrl}}/venta-detalle
+
+### Crear detalle de venta
+POST {{baseUrl}}/venta-detalle
+Content-Type: application/json
+
+{
+  "precioUnitario": 1500.00,
+  "impuestos": 120.00,
+  "subtotal": 1620.00,
+  "venta": { "idVenta": 1 },
+  "boleto": { "idBoleto": 1 }
+}
+
+### Crear detalle de venta 2
+POST {{baseUrl}}/venta-detalle
+Content-Type: application/json
+
+{
+  "precioUnitario": 1500.00,
+  "impuestos": 120.00,
+  "subtotal": 1620.00,
+  "venta": { "idVenta": 1 },
+  "boleto": { "idBoleto": 2 }
+}
+
+### Crear detalle de venta 3
+POST {{baseUrl}}/venta-detalle
+Content-Type: application/json
+
+{
+  "precioUnitario": 4500.00,
+  "impuestos": 360.00,
+  "subtotal": 4860.00,
+  "venta": { "idVenta": 2 },
+  "boleto": { "idBoleto": 3 }
+}
+
+############################################
+### 18. MÉTODO DE PAGO
+############################################
+
+### Obtener todos los métodos de pago
+GET {{baseUrl}}/metodos-pago
+
+### Crear método de pago - Tarjeta
+POST {{baseUrl}}/metodos-pago
+Content-Type: application/json
+
+{
+  "nombre": "Tarjeta de Crédito",
+  "descripcion": "Pago con tarjeta de crédito Visa/Mastercard"
+}
+
+### Crear método de pago - Transferencia
+POST {{baseUrl}}/metodos-pago
+Content-Type: application/json
+
+{
+  "nombre": "Transferencia Bancaria",
+  "descripcion": "Transferencia electrónica"
+}
+
+### Crear método de pago - Efectivo
+POST {{baseUrl}}/metodos-pago
+Content-Type: application/json
+
+{
+  "nombre": "Efectivo",
+  "descripcion": "Pago en efectivo"
+}
+
+############################################
+### 19. PAGOS
+############################################
+
+### Obtener todos los pagos
+GET {{baseUrl}}/pagos
+
+### Crear pago
+POST {{baseUrl}}/pagos
+Content-Type: application/json
+
+{
+  "metodoPago": "TARJETA",
+  "monto": 3240.00,
+  "fechaPago": "2025-05-01",
+  "estatus": "CONFIRMADO",
+  "metodoPagoObj": { "idMetodoPago": 1 },
+  "venta": { "idVenta": 1 }
+}
+
+### Crear pago 2
+POST {{baseUrl}}/pagos
+Content-Type: application/json
+
+{
+  "metodoPago": "TRANSFERENCIA",
+  "monto": 4860.00,
+  "fechaPago": "2025-05-02",
+  "estatus": "CONFIRMADO",
+  "metodoPagoObj": { "idMetodoPago": 2 },
+  "venta": { "idVenta": 2 }
+}
+
+############################################
+### 20. IMPUESTOS
+############################################
+
+### Obtener todos los impuestos
+GET {{baseUrl}}/impuestos
+
+### Crear impuesto - IVA
+POST {{baseUrl}}/impuestos
+Content-Type: application/json
+
+{
+  "nombre": "IVA",
+  "porcentaje": 16.00,
+  "descripcion": "Impuesto al Valor Agregado"
+}
+
+### Crear impuesto - TUA
+POST {{baseUrl}}/impuestos
+Content-Type: application/json
+
+{
+  "nombre": "TUA",
+  "porcentaje": 8.00,
+  "descripcion": "Tarifa de Uso de Aeropuerto"
+}
+
+############################################
+### 21. VENTA IMPUESTO
+############################################
+
+### Obtener todos los impuestos de venta
+GET {{baseUrl}}/venta-impuestos
+
+### Crear venta impuesto
+POST {{baseUrl}}/venta-impuestos
+Content-Type: application/json
+
+{
+  "detalle": { "idDetalle": 1 },
+  "impuesto": { "idImpuesto": 1 },
+  "montoImpuesto": 240.00
+}
+
+### Crear venta impuesto 2
+POST {{baseUrl}}/venta-impuestos
+Content-Type: application/json
+
+{
+  "detalle": { "idDetalle": 2 },
+  "impuesto": { "idImpuesto": 1 },
+  "montoImpuesto": 240.00
+}
+
+### Crear venta impuesto 3
+POST {{baseUrl}}/venta-impuestos
+Content-Type: application/json
+
+{
+  "detalle": { "idDetalle": 3 },
+  "impuesto": { "idImpuesto": 1 },
+  "montoImpuesto": 720.00
+}
+
+############################################
+### CONSULTAS ÚTILES
+############################################
+
+### Obtener un cliente específico (cambiar ID)
+GET {{baseUrl}}/clientes/1
+
+### Obtener una reserva específica
+GET {{baseUrl}}/reservas/1
+
+### Obtener un boleto específico
+GET {{baseUrl}}/boletos/1
+
+### Obtener una venta específica
+GET {{baseUrl}}/ventas/1
+
+### Obtener una instancia de vuelo específica
+GET {{baseUrl}}/instancias-vuelo/1
+
+############################################
+### ACTUALIZACIÓN DE DATOS (PUT)
+############################################
+
+### Actualizar estado de reserva
+PUT {{baseUrl}}/reservas/1
+Content-Type: application/json
+
+{
+  "codigoReserva": "RES001",
+  "fechaReserva": "2025-05-01",
+  "estado": "CANCELADA",
+  "cliente": { "idCliente": 1 }
+}
+
+### Actualizar estado de vuelo
+PUT {{baseUrl}}/instancias-vuelo/1
+Content-Type: application/json
+
+{
+  "fechaSalida": "2025-06-15T08:00:00",
+  "fechaLlegada": "2025-06-15T09:45:00",
+  "estadoVuelo": "EN_VUELO",
+  "vuelo": { "idVuelo": 1 },
+  "avion": { "idAvion": 1 },
+  "tripulacion": { "idTripulacion": 1 }
+}
+
+### Actualizar estado de boleto
+PUT {{baseUrl}}/boletos/1
+Content-Type: application/json
+
+{
+  "numeroBoleto": "BLT001",
+  "fechaEmision": "2025-05-01",
+  "precio": 1500.00,
+  "clase": "Económica",
+  "estado": "USADO",
+  "asiento": { "idAsiento": 3 },
+  "tarifa": { "idTarifa": 1 },
+  "pasajero": { "idPasajero": 1 },
+  "reserva": { "idReserva": 1 },
+  "instanciaVuelo": { "idInstanciaVuelo": 1 }
+}
+
+############################################
+### ELIMINACIÓN DE DATOS (DELETE)
+############################################
+
+### Eliminar una reserva (cambiar ID)
+DELETE {{baseUrl}}/reservas/99
+
+### Eliminar un pasajero
+DELETE {{baseUrl}}/pasajeros/99
+
+### Eliminar un cliente
+DELETE {{baseUrl}}/clientes/99
+
+############################################
+### NOTAS IMPORTANTES
+############################################
+### 
+### 1. Ejecutar las peticiones en orden para evitar errores de FK
+### 2. Ajustar los IDs según los registros creados
+### 3. El campo 'pasaporte' en Pasajero es byte[] - revisar implementación
+### 4. Asiento ahora usa relación @ManyToOne con Avion (CORREGIDO)
+### 5. VentaImpuesto ahora usa relaciones @ManyToOne (CORREGIDO)
+### 6. Verificar que los endpoints coincidan con los controladores
+###
+
+############################################
+### 🆕 NUEVOS ENDPOINTS - FUNCIONALIDADES WEB
+############################################
+
+### 🔍 BUSCAR VUELOS DISPONIBLES
+GET {{baseUrl}}/busqueda/vuelos?origen=1&destino=2&fecha=2025-06-15&pasajeros=2
+
+### Ver mapa de asientos de un vuelo
+GET {{baseUrl}}/busqueda/vuelos/1/asientos
+
+### Contar asientos disponibles
+GET {{baseUrl}}/busqueda/vuelos/1/disponibles
+
+### 🛒 PROCESAR COMPRA COMPLETA
+POST {{baseUrl}}/compra/procesar
+Content-Type: application/json
+
+{
+  "idCliente": 1,
+  "idInstanciaVuelo": 1,
+  "idMetodoPago": 1,
+  "pasajeros": [
+    {
+      "nombre": "Juan",
+      "apellidoP": "Pérez",
+      "apellidoM": "González",
+      "clase": "Económica",
+      "asiento": "12A"
+    },
+    {
+      "idPasajero": 2,
+      "clase": "Económica",
+      "asiento": "12B"
+    }
+  ]
+}
+
+### 👤 CONSULTAR MIS BOLETOS
+GET {{baseUrl}}/consulta/clientes/1/boletos
+
+### Consultar mis reservas
+GET {{baseUrl}}/consulta/clientes/1/reservas
+
+### Consultar historial de compras
+GET {{baseUrl}}/consulta/clientes/1/historial
+
+### Ver detalle de un boleto específico
+GET {{baseUrl}}/consulta/boletos/1
+
