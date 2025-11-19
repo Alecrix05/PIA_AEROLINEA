@@ -13,13 +13,19 @@ public class Cliente {
     private Integer idCliente;
 
     @NotBlank(message = "El nombre es requerido")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", message = "El nombre solo puede contener letras y espacios")
     @Column(name = "nombre", length = 50)
     private String nombre;
 
     @NotBlank(message = "El apellido paterno es requerido")
+    @Size(min = 2, max = 50, message = "El apellido paterno debe tener entre 2 y 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", message = "El apellido paterno solo puede contener letras y espacios")
     @Column(name = "apellido_p", length = 50)
     private String apellidoP;
 
+    @Size(max = 50, message = "El apellido materno no puede exceder 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$", message = "El apellido materno solo puede contener letras y espacios")
     @Column(name = "apellido_m", length = 50)
     private String apellidoM;
 
@@ -47,6 +53,7 @@ public class Cliente {
     @Column(name = "estado", length = 50)
     private String estado;
 
+    @Pattern(regexp = "^[0-9]{5}$", message = "El código postal debe tener 5 dígitos")
     @Column(name = "codigo_postal", length = 10)
     private String codigoPostal;
 

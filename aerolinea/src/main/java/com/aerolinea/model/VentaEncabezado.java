@@ -23,14 +23,16 @@ public class VentaEncabezado {
     @Column(name = "forma_pago", length = 30)
     private String formaPago;
 
+    @Pattern(regexp = "^(WEB|MOVIL|PRESENCIAL|TELEFONO)$", message = "Canal válido: WEB, MOVIL, PRESENCIAL, TELEFONO")
     @Column(name = "canal_venta", length = 30)
     private String canalVenta;
 
     @NotNull(message = "El total es requerido")
-    @DecimalMin(value = "0.0", message = "El total debe ser mayor o igual a 0")
+    @DecimalMin(value = "0.01", message = "El total debe ser mayor a 0")
     @Column(name = "total", precision = 10, scale = 2)
     private BigDecimal total;
 
+    @Pattern(regexp = "^(COMPLETADA|PENDIENTE|CANCELADA)$", message = "Estado válido: COMPLETADA, PENDIENTE, CANCELADA")
     @Column(name = "estado_venta", length = 30)
     private String estadoVenta;
 
@@ -62,4 +64,5 @@ public class VentaEncabezado {
 
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
 }

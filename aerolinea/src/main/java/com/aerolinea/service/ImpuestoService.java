@@ -24,4 +24,13 @@ public class ImpuestoService {
     public Impuesto buscarPorId(Integer id) {
         return impuestoRepository.findById(id).orElse(null);
     }
+
+    public Impuesto actualizar(Integer id, Impuesto impuesto) {
+        impuesto.setIdImpuesto(id);
+        return impuestoRepository.save(impuesto);
+    }
+
+    public void eliminar(Integer id) {
+        impuestoRepository.deleteById(id);
+    }
 }

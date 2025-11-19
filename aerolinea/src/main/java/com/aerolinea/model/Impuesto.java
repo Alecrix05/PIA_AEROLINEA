@@ -1,6 +1,7 @@
 package com.aerolinea.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,12 +13,19 @@ public class Impuesto {
     @Column(name = "id_impuesto")
     private Integer idImpuesto;
 
+    @NotBlank(message = "El nombre del impuesto es requerido")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", message = "El nombre solo puede contener letras y espacios")
     @Column(name = "nombre", length = 100)
     private String nombre;
 
+    @NotNull(message = "El porcentaje es requerido")
+    @DecimalMin(value = "0.00", message = "El porcentaje mínimo es 0%")
+    @DecimalMax(value = "100.00", message = "El porcentaje máximo es 100%")
     @Column(name = "porcentaje", precision = 5, scale = 2, nullable = false)
     private BigDecimal porcentaje;
 
+    @Size(max = 255, message = "La descripción no puede exceder 255 caracteres")
     @Column(name = "descripcion", length = 255)
     private String descripcion;
 

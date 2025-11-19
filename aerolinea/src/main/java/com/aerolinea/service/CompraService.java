@@ -110,7 +110,7 @@ public class CompraService {
             // Obtener tarifa según clase
             String clase = (String) pasajeroData.getOrDefault("clase", "Económica");
             Tarifa tarifa = tarifaRepository.findAll().stream()
-                    .filter(t -> clase.equals(t.getClase()) && t.getActivo() == 1)
+                    .filter(t -> clase.equals(t.getClase()) && Boolean.TRUE.equals(t.getActivo()))
                     .findFirst()
                     .orElseThrow(() -> new BusinessException("No hay tarifa disponible para la clase " + clase));
             
@@ -158,22 +158,29 @@ public class CompraService {
             totalVenta = totalVenta.add(tarifa.getPrecioBase());
         }
         
+        // Calcular total con impuestos
+        BigDecimal totalConImpuestos = totalVenta.multiply(new BigDecimal("1.16"));
+        
         // Crear venta encabezado
         VentaEncabezado venta = new VentaEncabezado();
         venta.setFechaVenta(LocalDate.now());
         venta.setFormaPago(idMetodoPago == 1 ? "TARJETA" : "EFECTIVO");
         venta.setCanalVenta("WEB");
-        venta.setTotal(totalVenta);
-        venta.setEstadoVenta("COMPLETADO");
+        venta.setTotal(totalConImpuestos);
+        venta.setEstadoVenta("COMPLETADA");
         venta.setCliente(cliente);
         venta = ventaRepository.save(venta);
         
         // Crear detalles de venta
         for (Boleto boleto : boletos) {
             VentaDetalle detalle = new VentaDetalle();
-            detalle.setPrecioUnitario(boleto.getPrecio().doubleValue());
-            detalle.setImpuestos(boleto.getPrecio().multiply(new BigDecimal("0.16")).doubleValue());
-            detalle.setSubtotal(boleto.getPrecio().multiply(new BigDecimal("1.16")).doubleValue());
+            BigDecimal precio = boleto.getPrecio();
+            BigDecimal impuestos = precio.multiply(new BigDecimal("0.16"));
+            BigDecimal subtotal = precio.add(impuestos);
+            
+            detalle.setPrecioUnitario(precio);
+            detalle.setImpuestos(impuestos);
+            detalle.setSubtotal(subtotal);
             detalle.setVenta(venta);
             detalle.setBoleto(boleto);
             detalleRepository.save(detalle);

@@ -18,12 +18,12 @@ public class Ruta {
     @Column(name = "distancia")
     private Double distancia;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_origen")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "ciudad"})
     private Aeropuerto origen;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_destino")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "ciudad"})
     private Aeropuerto destino;

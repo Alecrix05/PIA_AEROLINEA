@@ -40,4 +40,28 @@ public class EmpleadoController {
 
         return empleadoService.save(empleado);
     }
+
+    @GetMapping("/{id}")
+    public Empleado obtenerEmpleado(@PathVariable Integer id) {
+        return empleadoService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Empleado actualizarEmpleado(@PathVariable Integer id, @RequestBody Empleado empleado) {
+        if (empleado.getDepartamento() != null &&
+            empleado.getDepartamento().getIdDepartamento() != null) {
+
+            Departamento dept = departamentoRepository
+                    .findById(empleado.getDepartamento().getIdDepartamento())
+                    .orElse(null);
+
+            empleado.setDepartamento(dept);
+        }
+        return empleadoService.update(id, empleado);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarEmpleado(@PathVariable Integer id) {
+        empleadoService.deleteById(id);
+    }
 }

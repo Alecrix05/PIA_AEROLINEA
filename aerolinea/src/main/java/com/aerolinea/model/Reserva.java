@@ -23,6 +23,7 @@ public class Reserva {
     private LocalDate fechaReserva;
 
     @NotBlank(message = "El estado es requerido")
+    @Pattern(regexp = "^(PENDIENTE|CONFIRMADA|CANCELADA)$", message = "Estado válido: PENDIENTE, CONFIRMADA, CANCELADA")
     @Column(name = "estado", length = 20)
     private String estado;
 
@@ -47,4 +48,5 @@ public class Reserva {
 
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
 }

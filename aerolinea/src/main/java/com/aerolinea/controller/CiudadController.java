@@ -28,4 +28,14 @@ public class CiudadController {
     public Ciudad crear(@RequestBody Ciudad ciudad) {
         return ciudadService.guardar(ciudad);
     }
+
+    @PutMapping("/{id}")
+    public Ciudad actualizar(@PathVariable Integer id, @RequestBody Ciudad ciudad) {
+        return ciudadService.actualizar(id, ciudad);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        ciudadService.eliminar(id);
+    }
 }

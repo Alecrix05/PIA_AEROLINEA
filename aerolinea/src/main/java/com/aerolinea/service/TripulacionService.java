@@ -22,4 +22,17 @@ public class TripulacionService {
     public Tripulacion save(Tripulacion tripulacion) {
         return tripulacionRepository.save(tripulacion);
     }
+
+    public Tripulacion findById(Integer id) {
+        return tripulacionRepository.findById(id).orElse(null);
+    }
+
+    public Tripulacion update(Integer id, Tripulacion tripulacion) {
+        tripulacion.setIdTripulacion(id);
+        return tripulacionRepository.save(tripulacion);
+    }
+
+    public void deleteById(Integer id) {
+        tripulacionRepository.deleteById(id);
+    }
 }

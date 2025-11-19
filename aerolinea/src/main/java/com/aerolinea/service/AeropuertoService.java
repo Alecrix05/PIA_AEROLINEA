@@ -24,4 +24,13 @@ public class AeropuertoService {
     public Aeropuerto buscarPorId(Integer id) {
         return aeropuertoRepository.findById(id).orElse(null);
     }
+
+    public Aeropuerto actualizar(Integer id, Aeropuerto aeropuerto) {
+        aeropuerto.setIdAeropuerto(id);
+        return aeropuertoRepository.save(aeropuerto);
+    }
+
+    public void eliminar(Integer id) {
+        aeropuertoRepository.deleteById(id);
+    }
 }

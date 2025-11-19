@@ -22,4 +22,17 @@ public class RutaService {
     public Ruta save(Ruta ruta) {
         return rutaRepository.save(ruta);
     }
+
+    public Ruta findById(Integer id) {
+        return rutaRepository.findById(id).orElse(null);
+    }
+
+    public Ruta update(Integer id, Ruta ruta) {
+        ruta.setIdRuta(id);
+        return rutaRepository.save(ruta);
+    }
+
+    public void deleteById(Integer id) {
+        rutaRepository.deleteById(id);
+    }
 }

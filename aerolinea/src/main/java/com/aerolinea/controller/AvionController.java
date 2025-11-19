@@ -29,4 +29,18 @@ public class AvionController {
     public Avion crear(@RequestBody Avion avion) {
         return avionService.guardar(avion);
     }
+
+    @PutMapping("/{id}")
+    public Avion actualizar(@PathVariable Integer id, @RequestBody Avion avion) {
+        return avionService.actualizar(id, avion);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        try {
+            avionService.eliminar(id);
+        } catch (Exception e) {
+            throw new RuntimeException("No se puede eliminar el avión. Tiene asientos o vuelos asignados.");
+        }
+    }
 }

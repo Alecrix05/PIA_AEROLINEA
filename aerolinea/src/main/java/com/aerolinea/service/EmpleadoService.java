@@ -22,4 +22,17 @@ public class EmpleadoService {
     public Empleado save(Empleado empleado) {
         return empleadoRepository.save(empleado);
     }
+
+    public Empleado findById(Integer id) {
+        return empleadoRepository.findById(id).orElse(null);
+    }
+
+    public Empleado update(Integer id, Empleado empleado) {
+        empleado.setIdEmpleado(id);
+        return empleadoRepository.save(empleado);
+    }
+
+    public void deleteById(Integer id) {
+        empleadoRepository.deleteById(id);
+    }
 }

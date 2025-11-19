@@ -1,6 +1,7 @@
 package com.aerolinea.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -12,18 +13,33 @@ public class Empleado {
     @Column(name = "id_empleado")
     private Integer idEmpleado;
 
+    @NotBlank(message = "El nombre es requerido")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", message = "El nombre solo puede contener letras y espacios")
     private String nombre;
 
+    @NotBlank(message = "El apellido paterno es requerido")
+    @Size(min = 2, max = 50, message = "El apellido paterno debe tener entre 2 y 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$", message = "El apellido paterno solo puede contener letras y espacios")
     @Column(name = "apellido_p")
     private String apellidoP;
 
+    @Size(max = 50, message = "El apellido materno no puede exceder 50 caracteres")
+    @Pattern(regexp = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$", message = "El apellido materno solo puede contener letras y espacios")
     @Column(name = "apellido_m")
     private String apellidoM;
 
+    @NotBlank(message = "El puesto es requerido")
+    @Size(max = 100, message = "El puesto no puede exceder 100 caracteres")
     private String puesto;
 
+    @NotNull(message = "El salario es requerido")
+    @DecimalMin(value = "0.01", message = "El salario debe ser mayor a 0")
+    @DecimalMax(value = "999999.99", message = "El salario no puede exceder $999,999.99")
     private Double salario;
 
+    @NotNull(message = "La fecha de contratación es requerida")
+    @PastOrPresent(message = "La fecha de contratación no puede ser futura")
     @Column(name = "fecha_contratacion")
     private LocalDate fechaContratacion;
 

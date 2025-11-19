@@ -34,4 +34,14 @@ public class AeropuertoController {
     public Aeropuerto crear(@RequestBody Aeropuerto aeropuerto) {
         return aeropuertoService.guardar(aeropuerto);
     }
+
+    @PutMapping("/{id}")
+    public Aeropuerto actualizar(@PathVariable Integer id, @RequestBody Aeropuerto aeropuerto) {
+        return aeropuertoService.actualizar(id, aeropuerto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        aeropuertoService.eliminar(id);
+    }
 }

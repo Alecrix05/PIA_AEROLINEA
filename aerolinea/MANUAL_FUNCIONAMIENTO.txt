@@ -1,0 +1,214 @@
+===============================================================================
+                    MANUAL DE FUNCIONAMIENTO - AEROLINEA CARRILLO
+                           Sistema de Venta de Boletos
+===============================================================================
+
+DESCRIPCIÓN GENERAL:
+Sistema completo de gestión y venta de boletos de avión desarrollado con 
+Spring Boot y MySQL. Permite gestionar vuelos, vender boletos, administrar 
+clientes y generar reportes.
+
+===============================================================================
+                              CÓMO INICIAR EL SISTEMA
+===============================================================================
+
+1. PRERREQUISITOS:
+   - Java 17 instalado
+   - MySQL 8 corriendo
+   - Base de datos "aerolinea" creada con BD_aerolinea.sql
+
+2. CONFIGURACIÓN:
+   - Editar application.properties con tu contraseña de MySQL
+   - Ejecutar: mvnw spring-boot:run
+   - Sistema disponible en: http://localhost:8080
+
+3. DATOS DE PRUEBA:
+   - Se cargan automáticamente ciudades, aeropuertos, aviones, vuelos
+   - Clientes de ejemplo ya registrados
+   - Vuelos programados para fechas futuras
+
+===============================================================================
+                              FUNCIONALIDADES PRINCIPALES
+===============================================================================
+
+🔍 BÚSQUEDA DE VUELOS:
+   - Seleccionar ciudad origen y destino
+   - Elegir fecha de viaje
+   - Especificar número de pasajeros
+   - Sistema muestra vuelos disponibles con asientos libres
+
+✈️ PROCESO DE COMPRA:
+   Paso 1: Buscar vuelos disponibles
+   Paso 2: Seleccionar vuelo deseado
+   Paso 3: Ver mapa de asientos (disponibles/ocupados)
+   Paso 4: Seleccionar asientos específicos
+   Paso 5: Buscar o registrar cliente
+   Paso 6: Registrar pasajeros (si no existen)
+   Paso 7: Confirmar datos y procesar pago
+   Paso 8: Generar boletos y reserva
+
+💺 MAPA DE ASIENTOS:
+   - Verde: Asiento disponible
+   - Rojo: Asiento ocupado
+   - Azul: Asiento seleccionado
+   - Diferentes clases: Económica, Ejecutiva, Primera
+
+👥 GESTIÓN DE CLIENTES:
+   - Registro de nuevos clientes
+   - Búsqueda por nombre o teléfono
+   - Historial de compras
+   - Consulta de boletos activos
+
+📋 ADMINISTRACIÓN:
+   - CRUD completo de todas las entidades
+   - Gestión de ciudades y aeropuertos
+   - Configuración de aviones y asientos
+   - Administración de rutas y vuelos
+   - Control de empleados y tripulaciones
+
+===============================================================================
+                              MÓDULOS DEL SISTEMA
+===============================================================================
+
+📊 COMERCIAL:
+   - Búsqueda de vuelos
+   - Proceso de compra
+   - Consulta de boletos
+   - Historial de clientes
+
+⚙️ CONFIGURACIÓN:
+   - Ciudades y aeropuertos
+   - Rutas de vuelo
+   - Aviones y configuración de asientos
+   - Empleados y departamentos
+
+✈️ OPERACIONES:
+   - Programación de vuelos
+   - Instancias de vuelo (fechas específicas)
+   - Asignación de tripulaciones
+   - Control de tarifas
+
+💰 VENTAS:
+   - Registro de ventas
+   - Métodos de pago
+   - Control de impuestos
+   - Reportes financieros
+
+===============================================================================
+                              CARACTERÍSTICAS TÉCNICAS
+===============================================================================
+
+🔒 VALIDACIONES IMPLEMENTADAS:
+   - Prevención de overbooking
+   - Validación de asientos duplicados
+   - Control de capacidad de aviones
+   - Verificación de vuelos disponibles
+   - Generación automática de códigos únicos
+
+💲 SISTEMA DE PRECIOS:
+   - Precios dinámicos por clase:
+     * Económica: $1,500
+     * Ejecutiva: $2,500
+     * Primera: $4,000
+   - Cálculo automático de IVA (16%)
+   - Subtotales por boleto
+
+📄 GENERACIÓN DE DOCUMENTOS:
+   - Ticket de compra (PDF)
+   - Pase de abordar (PDF)
+   - Códigos únicos para boletos y reservas
+   - Información completa del vuelo
+
+🌐 INTERFAZ WEB:
+   - Diseño responsivo
+   - Validación en tiempo real
+   - Conversión automática a mayúsculas
+   - Mensajes de error claros
+
+===============================================================================
+                              FLUJO DE TRABAJO TÍPICO
+===============================================================================
+
+PARA VENDER UN BOLETO:
+
+1. Ir a pestaña "Comercial" → "Búsqueda de Vuelos"
+2. Seleccionar origen, destino, fecha y pasajeros
+3. Hacer clic en "Buscar Vuelos"
+4. Elegir vuelo de la lista y hacer clic en "Seleccionar"
+5. En el mapa de asientos, hacer clic en asientos verdes
+6. Buscar cliente existente o registrar nuevo
+7. Verificar/registrar datos de pasajeros
+8. Confirmar compra y procesar pago
+9. Descargar ticket y pases de abordar generados
+
+PARA CONSULTAR BOLETOS:
+1. Ir a "Comercial" → "Consulta de Boletos"
+2. Buscar por cliente o número de boleto
+3. Ver detalles completos del vuelo
+4. Descargar pase de abordar si es necesario
+
+===============================================================================
+                              DATOS IMPORTANTES
+===============================================================================
+
+🏢 AEROPUERTOS CONFIGURADOS:
+   - Ciudad de México (MEX) - Aeropuerto Internacional Benito Juárez
+   - Monterrey (MTY) - Aeropuerto Internacional de Monterrey
+   - Guadalajara (GDL) - Aeropuerto Internacional Miguel Hidalgo
+   - Cancún (CUN) - Aeropuerto Internacional de Cancún
+
+✈️ FLOTA DE AVIONES:
+   - Boeing 737-800 (189 asientos)
+   - Airbus A320 (180 asientos)
+   - Embraer E190 (100 asientos)
+
+👨‍✈️ PERSONAL:
+   - Pilotos y copilotos certificados
+   - Tripulaciones asignadas por vuelo
+   - Personal administrativo
+
+💳 MÉTODOS DE PAGO:
+   - Tarjeta de crédito
+   - Tarjeta de débito
+   - Transferencia bancaria
+   - Efectivo
+
+===============================================================================
+                              SOLUCIÓN DE PROBLEMAS
+===============================================================================
+
+❌ SI NO APARECEN VUELOS:
+   - Verificar que la fecha sea futura
+   - Confirmar que existen rutas entre las ciudades
+   - Revisar que haya instancias de vuelo programadas
+
+❌ SI NO SE PUEDEN SELECCIONAR ASIENTOS:
+   - Verificar que el asiento esté disponible (verde)
+   - Confirmar que no exceda el número de pasajeros
+   - Revisar que el vuelo esté en estado "PROGRAMADO"
+
+❌ SI FALLA LA COMPRA:
+   - Verificar datos completos del cliente
+   - Confirmar información de pasajeros
+   - Revisar que los asientos sigan disponibles
+
+❌ SI NO SE GENERAN PDF:
+   - Verificar que la venta se haya completado
+   - Confirmar que existan todos los datos del vuelo
+   - Revisar logs del servidor para errores
+
+===============================================================================
+                              CONTACTO Y SOPORTE
+===============================================================================
+
+Para dudas técnicas o problemas con el sistema:
+- Revisar logs en consola del servidor
+- Verificar conexión a base de datos
+- Confirmar que todos los servicios estén activos
+
+Sistema desarrollado para proyecto académico - Base de Datos
+Tecnologías: Java 17, Spring Boot 3.5.7, MySQL 8, iText PDF
+
+===============================================================================
+                                    FIN DEL MANUAL
+===============================================================================

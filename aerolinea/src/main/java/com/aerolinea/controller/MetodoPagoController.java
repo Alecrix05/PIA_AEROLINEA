@@ -28,4 +28,14 @@ public class MetodoPagoController {
     public MetodoPago crear(@RequestBody MetodoPago metodoPago) {
         return metodoPagoService.guardar(metodoPago);
     }
+
+    @PutMapping("/{id}")
+    public MetodoPago actualizar(@PathVariable Integer id, @RequestBody MetodoPago metodoPago) {
+        return metodoPagoService.actualizar(id, metodoPago);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        metodoPagoService.eliminar(id);
+    }
 }

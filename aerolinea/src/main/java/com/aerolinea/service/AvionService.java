@@ -24,4 +24,21 @@ public class AvionService {
     public Avion buscarPorId(Integer id) {
         return avionRepository.findById(id).orElse(null);
     }
+
+    public Avion actualizar(Integer id, Avion avion) {
+        Avion avionExistente = avionRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Avión no encontrado"));
+        
+        // Solo actualizar campos permitidos, no el ID
+        avionExistente.setMatricula(avion.getMatricula());
+        avionExistente.setModelo(avion.getModelo());
+        avionExistente.setCapacidad(avion.getCapacidad());
+        avionExistente.setEstadoOperativo(avion.getEstadoOperativo());
+        
+        return avionRepository.save(avionExistente);
+    }
+
+    public void eliminar(Integer id) {
+        avionRepository.deleteById(id);
+    }
 }

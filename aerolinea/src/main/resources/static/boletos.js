@@ -195,8 +195,12 @@ function validarBoleto(boletoData) {
     limpiarErroresValidacionBoleto();
     let esValido = true;
     
+    // Validar número de boleto - alfanumérico con guiones
     if (!boletoData.numeroBoleto || boletoData.numeroBoleto.trim().length === 0) {
         mostrarErrorCampoBoleto('boletoNumero', 'El número de boleto es requerido');
+        esValido = false;
+    } else if (!/^[a-zA-Z0-9\-]+$/.test(boletoData.numeroBoleto)) {
+        mostrarErrorCampoBoleto('boletoNumero', 'El número de boleto solo puede contener letras, números y guiones');
         esValido = false;
     }
     
@@ -208,11 +212,29 @@ function validarBoleto(boletoData) {
     if (!boletoData.fechaEmision) {
         mostrarErrorCampoBoleto('boletoFecha', 'La fecha de emisión es requerida');
         esValido = false;
+    } else {
+        const fechaEmision = new Date(boletoData.fechaEmision);
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        if (fechaEmision > hoy) {
+            mostrarErrorCampoBoleto('boletoFecha', 'La fecha de emisión no puede ser futura');
+            esValido = false;
+        }
     }
     
-    if (!boletoData.precio || boletoData.precio <= 0) {
-        mostrarErrorCampoBoleto('boletoPrecio', 'El precio debe ser mayor a 0');
+    // Validar precio - solo números decimales positivos
+    if (!boletoData.precio) {
+        mostrarErrorCampoBoleto('boletoPrecio', 'El precio es requerido');
         esValido = false;
+    } else {
+        const precio = parseFloat(boletoData.precio);
+        if (isNaN(precio) || precio <= 0) {
+            mostrarErrorCampoBoleto('boletoPrecio', 'El precio debe ser un número mayor a 0');
+            esValido = false;
+        } else if (precio > 100000) {
+            mostrarErrorCampoBoleto('boletoPrecio', 'El precio no puede exceder $100,000');
+            esValido = false;
+        }
     }
     
     if (!boletoData.clase) {

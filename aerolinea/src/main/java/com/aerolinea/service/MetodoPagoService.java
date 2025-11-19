@@ -24,4 +24,13 @@ public class MetodoPagoService {
     public MetodoPago buscarPorId(Integer id) {
         return metodoPagoRepository.findById(id).orElse(null);
     }
+
+    public MetodoPago actualizar(Integer id, MetodoPago metodoPago) {
+        metodoPago.setIdMetodoPago(id);
+        return metodoPagoRepository.save(metodoPago);
+    }
+
+    public void eliminar(Integer id) {
+        metodoPagoRepository.deleteById(id);
+    }
 }

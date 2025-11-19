@@ -24,4 +24,13 @@ public class TarifaService {
     public Tarifa buscarPorId(Integer id) {
         return tarifaRepository.findById(id).orElse(null);
     }
+
+    public Tarifa actualizar(Integer id, Tarifa tarifa) {
+        tarifa.setIdTarifa(id);
+        return tarifaRepository.save(tarifa);
+    }
+
+    public void eliminar(Integer id) {
+        tarifaRepository.deleteById(id);
+    }
 }

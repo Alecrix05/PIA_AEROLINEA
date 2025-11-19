@@ -3,6 +3,7 @@ package com.aerolinea.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Venta_Detalle")
@@ -15,14 +16,14 @@ public class VentaDetalle {
 
     @NotNull(message = "El precio unitario es requerido")
     @DecimalMin(value = "0.0", message = "El precio debe ser mayor o igual a 0")
-    @Column(name = "precio_unitario")
-    private Double precioUnitario;
+    @Column(name = "precio_unitario", precision = 10, scale = 2)
+    private BigDecimal precioUnitario;
 
-    @Column(name = "impuestos")
-    private Double impuestos;
+    @Column(name = "impuestos", precision = 10, scale = 2)
+    private BigDecimal impuestos;
 
-    @Column(name = "subtotal")
-    private Double subtotal;
+    @Column(name = "subtotal", precision = 10, scale = 2)
+    private BigDecimal subtotal;
 
     @ManyToOne
     @JoinColumn(name = "id_venta")
@@ -45,27 +46,27 @@ public class VentaDetalle {
         this.idDetalle = idDetalle;
     }
 
-    public Double getPrecioUnitario() {
+    public BigDecimal getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Double precioUnitario) {
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public Double getImpuestos() {
+    public BigDecimal getImpuestos() {
         return impuestos;
     }
 
-    public void setImpuestos(Double impuestos) {
+    public void setImpuestos(BigDecimal impuestos) {
         this.impuestos = impuestos;
     }
 
-    public Double getSubtotal() {
+    public BigDecimal getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(Double subtotal) {
+    public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }
 

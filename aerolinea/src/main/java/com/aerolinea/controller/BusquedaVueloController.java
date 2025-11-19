@@ -54,4 +54,34 @@ public class BusquedaVueloController {
         int disponibles = busquedaService.contarAsientosDisponibles(idInstanciaVuelo);
         return ResponseEntity.ok(Map.of("disponibles", disponibles));
     }
+
+    /**
+     * Búsqueda flexible de vuelos (parámetros opcionales)
+     * GET /api/busqueda/vuelos-flexible?origen=1&destino=2&fecha=2025-06-15&pasajeros=1
+     */
+    @GetMapping("/vuelos-flexible")
+    public ResponseEntity<List<Map<String, Object>>> buscarVuelosFlexible(
+            @RequestParam(required = false) Integer origen,
+            @RequestParam(required = false) Integer destino,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam(defaultValue = "1") Integer pasajeros) {
+        
+        System.out.println("=== CONTROLADOR DEBUG ===");
+        System.out.println("Parámetros recibidos: origen=" + origen + ", destino=" + destino + ", fecha=" + fecha + ", pasajeros=" + pasajeros);
+        
+        List<Map<String, Object>> vuelos = busquedaService.buscarVuelosFlexible(origen, destino, fecha, pasajeros);
+        
+        System.out.println("Vuelos devueltos: " + vuelos.size());
+        vuelos.forEach(v -> System.out.println("- " + v.get("numeroVuelo") + " (" + v.get("asientosDisponibles") + " disponibles)"));
+        
+        return ResponseEntity.ok(vuelos);
+    }
+    
+    /**
+     * Debug: Ver todas las instancias de vuelo
+     */
+    @GetMapping("/debug/instancias")
+    public ResponseEntity<List<Map<String, Object>>> debugInstancias() {
+        return ResponseEntity.ok(busquedaService.buscarVuelosFlexible(null, null, null, 0));
+    }
 }

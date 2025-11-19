@@ -29,10 +29,10 @@ public class Boleto {
     private BigDecimal precio;
 
     @NotBlank(message = "La clase es requerida")
+    @Pattern(regexp = "^(Económica|Ejecutiva|Primera)$", message = "Clase válida: Económica, Ejecutiva, Primera")
     @Column(name = "clase", length = 20)
     private String clase;
 
-    @NotBlank(message = "El estado es requerido")
     @Column(name = "estado", length = 20)
     private String estado;
 

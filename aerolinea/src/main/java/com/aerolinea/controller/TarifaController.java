@@ -28,4 +28,14 @@ public class TarifaController {
     public Tarifa crear(@RequestBody Tarifa tarifa) {
         return tarifaService.guardar(tarifa);
     }
+
+    @PutMapping("/{id}")
+    public Tarifa actualizar(@PathVariable Integer id, @RequestBody Tarifa tarifa) {
+        return tarifaService.actualizar(id, tarifa);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        tarifaService.eliminar(id);
+    }
 }

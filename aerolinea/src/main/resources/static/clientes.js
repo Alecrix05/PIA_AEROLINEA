@@ -132,28 +132,39 @@ function validarCliente(clienteData) {
     limpiarErroresValidacion();
     let esValido = true;
     
-    // Validar nombre
+    // Validar nombre - solo letras y espacios
     if (!clienteData.nombre || clienteData.nombre.trim().length === 0) {
         mostrarErrorCampo('clienteNombre', 'El nombre es requerido');
+        esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(clienteData.nombre)) {
+        mostrarErrorCampo('clienteNombre', 'El nombre solo puede contener letras y espacios');
         esValido = false;
     } else if (clienteData.nombre.length > 50) {
         mostrarErrorCampo('clienteNombre', 'El nombre no puede exceder 50 caracteres');
         esValido = false;
     }
     
-    // Validar apellido paterno
+    // Validar apellido paterno - solo letras y espacios
     if (!clienteData.apellidoP || clienteData.apellidoP.trim().length === 0) {
         mostrarErrorCampo('clienteApellidoP', 'El apellido paterno es requerido');
+        esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(clienteData.apellidoP)) {
+        mostrarErrorCampo('clienteApellidoP', 'El apellido paterno solo puede contener letras y espacios');
         esValido = false;
     } else if (clienteData.apellidoP.length > 50) {
         mostrarErrorCampo('clienteApellidoP', 'El apellido paterno no puede exceder 50 caracteres');
         esValido = false;
     }
     
-    // Validar apellido materno (opcional pero con límite)
-    if (clienteData.apellidoM && clienteData.apellidoM.length > 50) {
-        mostrarErrorCampo('clienteApellidoM', 'El apellido materno no puede exceder 50 caracteres');
-        esValido = false;
+    // Validar apellido materno - solo letras y espacios (opcional)
+    if (clienteData.apellidoM) {
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(clienteData.apellidoM)) {
+            mostrarErrorCampo('clienteApellidoM', 'El apellido materno solo puede contener letras y espacios');
+            esValido = false;
+        } else if (clienteData.apellidoM.length > 50) {
+            mostrarErrorCampo('clienteApellidoM', 'El apellido materno no puede exceder 50 caracteres');
+            esValido = false;
+        }
     }
     
     // Validar correo
@@ -171,19 +182,36 @@ function validarCliente(clienteData) {
         }
     }
     
-    // Validar teléfono (opcional pero con formato)
+    // Validar teléfono - solo números (opcional pero con formato)
     if (clienteData.telefono) {
         const telefonoRegex = /^[0-9]{10,15}$/;
         if (!telefonoRegex.test(clienteData.telefono)) {
-            mostrarErrorCampo('clienteTelefono', 'El teléfono debe contener entre 10 y 15 dígitos numéricos');
+            mostrarErrorCampo('clienteTelefono', 'El teléfono debe contener solo números (entre 10 y 15 dígitos)');
             esValido = false;
         }
     }
     
-    // Validar código postal (opcional pero con formato)
-    if (clienteData.codigoPostal && clienteData.codigoPostal.length > 10) {
-        mostrarErrorCampo('clienteCodigoPostal', 'El código postal no puede exceder 10 caracteres');
+    // Validar ciudad - solo letras y espacios (opcional)
+    if (clienteData.ciudad && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(clienteData.ciudad)) {
+        mostrarErrorCampo('clienteCiudad', 'La ciudad solo puede contener letras y espacios');
         esValido = false;
+    }
+    
+    // Validar estado - solo letras y espacios (opcional)
+    if (clienteData.estado && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(clienteData.estado)) {
+        mostrarErrorCampo('clienteEstado', 'El estado solo puede contener letras y espacios');
+        esValido = false;
+    }
+    
+    // Validar código postal - solo números y letras (opcional)
+    if (clienteData.codigoPostal) {
+        if (!/^[a-zA-Z0-9]+$/.test(clienteData.codigoPostal)) {
+            mostrarErrorCampo('clienteCodigoPostal', 'El código postal solo puede contener números y letras');
+            esValido = false;
+        } else if (clienteData.codigoPostal.length > 10) {
+            mostrarErrorCampo('clienteCodigoPostal', 'El código postal no puede exceder 10 caracteres');
+            esValido = false;
+        }
     }
     
     return esValido;

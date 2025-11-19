@@ -24,4 +24,13 @@ public class CiudadService {
     public Ciudad buscarPorId(Integer id) {
         return ciudadRepository.findById(id).orElse(null);
     }
+
+    public Ciudad actualizar(Integer id, Ciudad ciudad) {
+        ciudad.setIdCiudad(id);
+        return ciudadRepository.save(ciudad);
+    }
+
+    public void eliminar(Integer id) {
+        ciudadRepository.deleteById(id);
+    }
 }

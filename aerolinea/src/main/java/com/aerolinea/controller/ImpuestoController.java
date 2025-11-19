@@ -28,4 +28,14 @@ public class ImpuestoController {
     public Impuesto crear(@RequestBody Impuesto impuesto) {
         return impuestoService.guardar(impuesto);
     }
+
+    @PutMapping("/{id}")
+    public Impuesto actualizar(@PathVariable Integer id, @RequestBody Impuesto impuesto) {
+        return impuestoService.actualizar(id, impuesto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        impuestoService.eliminar(id);
+    }
 }

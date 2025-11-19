@@ -25,4 +25,19 @@ public class DepartamentoController {
     public Departamento agregarDepartamento(@RequestBody Departamento departamento) {
         return departamentoService.save(departamento);
     }
+
+    @GetMapping("/{id}")
+    public Departamento obtenerDepartamento(@PathVariable Integer id) {
+        return departamentoService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Departamento actualizarDepartamento(@PathVariable Integer id, @RequestBody Departamento departamento) {
+        return departamentoService.update(id, departamento);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarDepartamento(@PathVariable Integer id) {
+        departamentoService.deleteById(id);
+    }
 }

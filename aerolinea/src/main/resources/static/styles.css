@@ -136,6 +136,23 @@ body {
     border-left: 4px solid var(--carrillo-blue);
 }
 
+/* Convertir automáticamente a mayúsculas */
+.uppercase-input {
+    text-transform: uppercase;
+}
+
+/* Aplicar a campos de texto específicos */
+input[type="text"]:not([data-no-uppercase]),
+input[type="email"]:not([data-no-uppercase]),
+textarea:not([data-no-uppercase]) {
+    text-transform: uppercase;
+}
+
+/* Excepciones para campos que no deben ser mayúsculas */
+input[data-no-uppercase="true"] {
+    text-transform: none;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         display: none;

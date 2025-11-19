@@ -24,4 +24,17 @@ public class AsientoService {
     public Asiento buscarPorId(Integer id) {
         return asientoRepository.findById(id).orElse(null);
     }
+
+    public List<Asiento> buscarPorAvion(Integer idAvion) {
+        return asientoRepository.findByAvionIdAvion(idAvion);
+    }
+
+    public Asiento actualizar(Integer id, Asiento asiento) {
+        asiento.setIdAsiento(id);
+        return asientoRepository.save(asiento);
+    }
+
+    public void eliminar(Integer id) {
+        asientoRepository.deleteById(id);
+    }
 }

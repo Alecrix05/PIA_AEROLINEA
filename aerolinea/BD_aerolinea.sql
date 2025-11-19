@@ -316,6 +316,8 @@ JOIN Cliente c ON v.id_cliente = c.id_cliente;
 $$
 DELIMITER ;
 
+SELECT * FROM vista_resumen_ventas;
+
 -- ==============================
 -- 4️⃣ ROLES Y USUARIOS
 -- ==============================

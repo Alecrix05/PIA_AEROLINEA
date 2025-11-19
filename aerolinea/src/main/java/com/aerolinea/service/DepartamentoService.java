@@ -22,4 +22,17 @@ public class DepartamentoService {
     public Departamento save(Departamento departamento) {
         return departamentoRepository.save(departamento);
     }
+
+    public Departamento findById(Integer id) {
+        return departamentoRepository.findById(id).orElse(null);
+    }
+
+    public Departamento update(Integer id, Departamento departamento) {
+        departamento.setIdDepartamento(id);
+        return departamentoRepository.save(departamento);
+    }
+
+    public void deleteById(Integer id) {
+        departamentoRepository.deleteById(id);
+    }
 }

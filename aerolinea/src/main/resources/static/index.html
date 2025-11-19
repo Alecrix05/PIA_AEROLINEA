@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -35,29 +37,26 @@
                         <a href="#" class="list-group-item list-group-item-action active" onclick="showSection('dashboard')">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('clientes')">
-                            <i class="fas fa-users"></i> Clientes
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('configuracion')">
+                            <i class="fas fa-cog"></i> Configuración
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('pasajeros')">
-                            <i class="fas fa-user-friends"></i> Pasajeros
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('aeronaves')">
+                            <i class="fas fa-plane"></i> Aeronaves
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('vuelos')">
-                            <i class="fas fa-plane-departure"></i> Vuelos
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('personal')">
+                            <i class="fas fa-users-cog"></i> Personal
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('instancias')">
-                            <i class="fas fa-calendar-alt"></i> Instancias Vuelo
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('comercial')">
+                            <i class="fas fa-handshake"></i> Comercial
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('reservas')">
-                            <i class="fas fa-bookmark"></i> Reservas
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('operaciones')">
+                            <i class="fas fa-plane-departure"></i> Operaciones
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('boletos')">
-                            <i class="fas fa-ticket-alt"></i> Boletos
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('ventas')">
+                        <a href="#" class="list-group-item list-group-item-action" onclick="showSection('gestion-ventas')">
                             <i class="fas fa-shopping-cart"></i> Ventas
                         </a>
                         <a href="#" class="list-group-item list-group-item-action" onclick="showSection('busqueda')">
-                            <i class="fas fa-search"></i> Búsqueda Vuelos
+                            <i class="fas fa-search"></i> Búsqueda
                         </a>
                     </div>
                 </div>
@@ -78,163 +77,429 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-danger">
+                            <div class="card text-white bg-success">
                                 <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-bookmark"></i> Reservas</h5>
-                                    <h2 id="totalReservas">0</h2>
+                                    <h5 class="card-title"><i class="fas fa-plane"></i> Aviones</h5>
+                                    <h2 id="totalAviones">0</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="card text-white bg-primary">
+                            <div class="card text-white bg-info">
                                 <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-ticket-alt"></i> Boletos</h5>
-                                    <h2 id="totalBoletos">0</h2>
+                                    <h5 class="card-title"><i class="fas fa-route"></i> Rutas</h5>
+                                    <h2 id="totalRutas">0</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="card text-white bg-danger">
                                 <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-plane"></i> Vuelos Activos</h5>
-                                    <h2 id="totalVuelos">0</h2>
+                                    <h5 class="card-title"><i class="fas fa-ticket-alt"></i> Ventas Hoy</h5>
+                                    <h2 id="totalVentasHoy">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <i class="fas fa-chart-line"></i> Próximos Vuelos
+                                </div>
+                                <div class="card-body">
+                                    <div id="proximosVuelos">
+                                        <p class="text-muted">Cargando...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <i class="fas fa-users-cog"></i> Personal Activo
+                                </div>
+                                <div class="card-body">
+                                    <div id="personalActivo">
+                                        <p class="text-muted">Cargando...</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Clientes Section -->
-                <div id="clientes" class="content-section" style="display:none;">
-                    <h2 class="mb-4"><i class="fas fa-users"></i> Gestión de Clientes</h2>
+                <!-- Configuración Section -->
+                <div id="configuracion" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-cog"></i> Configuración del Sistema</h2>
+                    
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-3" id="configTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="ciudades-tab" data-bs-toggle="tab" data-bs-target="#ciudades-content" type="button">
+                                <i class="fas fa-city"></i> Ciudades
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="aeropuertos-tab" data-bs-toggle="tab" data-bs-target="#aeropuertos-content" type="button">
+                                <i class="fas fa-plane-arrival"></i> Aeropuertos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="departamentos-tab" data-bs-toggle="tab" data-bs-target="#departamentos-content" type="button">
+                                <i class="fas fa-building"></i> Departamentos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="metodos-pago-tab" data-bs-toggle="tab" data-bs-target="#metodos-pago-content" type="button">
+                                <i class="fas fa-credit-card"></i> Métodos de Pago
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="impuestos-tab" data-bs-toggle="tab" data-bs-target="#impuestos-content" type="button">
+                                <i class="fas fa-percentage"></i> Impuestos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tarifas-tab" data-bs-toggle="tab" data-bs-target="#tarifas-content" type="button">
+                                <i class="fas fa-dollar-sign"></i> Tarifas
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="configTabsContent">
+                        <!-- Las pestañas de configuración se cargan dinámicamente desde configuracion.js -->
+                        <div class="tab-pane fade show active" id="ciudades-content"></div>
+                        <div class="tab-pane fade" id="aeropuertos-content"></div>
+                        <div class="tab-pane fade" id="departamentos-content"></div>
+                        <div class="tab-pane fade" id="metodos-pago-content"></div>
+                        <div class="tab-pane fade" id="impuestos-content"></div>
+                        <div class="tab-pane fade" id="tarifas-content"></div>
+                    </div>
+                </div>
+
+                <!-- Aeronaves Section -->
+                <div id="aeronaves" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-plane"></i> Gestión de Aeronaves</h2>
+                    
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-3" id="aeronaveTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="aviones-tab" data-bs-toggle="tab" data-bs-target="#aviones-content" type="button">
+                                <i class="fas fa-plane"></i> Aviones
+                            </button>
+                        </li>
+
+                    </ul>
+                    
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="aeronaveTabsContent">
+                        <!-- Las pestañas de aeronaves se cargan dinámicamente desde aeronaves.js -->
+                        <div class="tab-pane fade show active" id="aviones-content"></div>
+
+                    </div>
+                </div>
+
+                <!-- Personal Section -->
+                <div id="personal" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-users-cog"></i> Gestión de Personal</h2>
+                    
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-3" id="personalTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="empleados-tab" data-bs-toggle="tab" data-bs-target="#empleados-content" type="button">
+                                <i class="fas fa-user-tie"></i> Empleados
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tripulaciones-tab" data-bs-toggle="tab" data-bs-target="#tripulaciones-content" type="button">
+                                <i class="fas fa-users"></i> Tripulaciones
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="personalTabsContent">
+                        <!-- Las pestañas de personal se cargan dinámicamente desde personal.js -->
+                        <div class="tab-pane fade show active" id="empleados-content"></div>
+                        <div class="tab-pane fade" id="tripulaciones-content"></div>
+                    </div>
+                </div>
+
+                <!-- Comercial Section -->
+                <div id="comercial" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-handshake"></i> Gestión Comercial</h2>
+                    
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-3" id="comercialTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="clientes-tab" data-bs-toggle="tab" data-bs-target="#clientes-content" type="button">
+                                <i class="fas fa-users"></i> Clientes
+                            </button>
+                        </li>
+
+                    </ul>
+                    
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="comercialTabsContent">
+                        <!-- Las pestañas de comercial se cargan dinámicamente desde comercial.js -->
+                        <div class="tab-pane fade show active" id="clientes-content"></div>
+
+                    </div>
+                </div>
+
+                <!-- Operaciones Section -->
+                <div id="operaciones" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-plane-departure"></i> Operaciones de Vuelo</h2>
+                    
+                    <!-- Tabs Navigation -->
+                    <ul class="nav nav-tabs mb-3" id="operacionesTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="rutas-tab" data-bs-toggle="tab" data-bs-target="#rutas-content" type="button">
+                                <i class="fas fa-route"></i> Rutas
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="vuelos-tab" data-bs-toggle="tab" data-bs-target="#vuelos-content" type="button">
+                                <i class="fas fa-plane"></i> Vuelos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="instancias-tab" data-bs-toggle="tab" data-bs-target="#instancias-content" type="button">
+                                <i class="fas fa-calendar-alt"></i> Instancias
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tabs Content -->
+                    <div class="tab-content" id="operacionesTabsContent">
+                        <!-- Las pestañas de operaciones se cargan dinámicamente desde operaciones-vuelo.js -->
+                        <div class="tab-pane fade show active" id="rutas-content"></div>
+                        <div class="tab-pane fade" id="vuelos-content"></div>
+                        <div class="tab-pane fade" id="instancias-content"></div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Ventas Section -->
+                <div id="gestion-ventas" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-shopping-cart"></i> Proceso de Venta</h2>
+                    
+                    <!-- El contenido completo se carga dinámicamente desde gestion-ventas.js -->
+                    <div id="procesoVentaContent">
+                        <!-- Aquí se cargará el wizard de pasos para la venta -->
+                    </div>
+                </div>
+
+                <!-- Búsqueda Section -->
+                <div id="busqueda" class="content-section" style="display:none;">
+                    <h2 class="mb-4"><i class="fas fa-search"></i> Búsqueda de Vuelos</h2>
                     
                     <div class="card">
                         <div class="card-header bg-primary text-white">
-                            <i class="fas fa-user-plus"></i> Nuevo Cliente
+                            <i class="fas fa-search"></i> Buscar Vuelos Disponibles
                         </div>
                         <div class="card-body">
-                            <form id="formCliente" novalidate>
-                                <h5 class="mb-3 text-primary">Datos Personales</h5>
+                            <form id="formBusquedaVuelos">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Aeropuerto de Origen</label>
+                                            <select class="form-control" id="busquedaOrigen">
+                                                <option value="">Cualquier origen</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Aeropuerto de Destino</label>
+                                            <select class="form-control" id="busquedaDestino">
+                                                <option value="">Cualquier destino</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de Viaje</label>
+                                            <input type="date" class="form-control" id="busquedaFecha">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-lg" onclick="buscarVuelos()">
+                                    <i class="fas fa-search"></i> Buscar Vuelos
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div class="card mt-4" id="resultadosBusqueda" style="display:none;">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-plane"></i> Resultados de Búsqueda
+                        </div>
+                        <div class="card-body">
+                            <div id="listaResultados"></div>
+                        </div>
+                    </div>
+
+                    <!-- Selección de Cliente -->
+                    <div class="card mt-4" id="seleccionClienteCard" style="display:none;">
+                        <div class="card-header bg-info text-white">
+                            <i class="fas fa-user-search"></i> Paso 2: Seleccionar Cliente
+                        </div>
+                        <div class="card-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">Buscar Cliente</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="buscarClienteInput" placeholder="Buscar por nombre, correo...">
+                                    <button class="btn btn-outline-primary" onclick="buscarClientes()">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="listaClientes" style="display:none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Selección de Asiento -->
+                    <div class="card mt-4" id="seleccionAsientoCard" style="display:none;">
+                        <div class="card-header bg-warning text-dark">
+                            <i class="fas fa-chair"></i> Paso 3: Seleccionar Asiento
+                        </div>
+                        <div class="card-body">
+
+                            <div id="mapaAsientos"></div>
+                        </div>
+                    </div>
+
+                    <!-- Datos del Pasajero -->
+                    <div class="card mt-4" id="datosPasajeroCard" style="display:none;">
+                        <div class="card-header bg-info text-white">
+                            <i class="fas fa-user-edit"></i> Paso 4: Datos del Pasajero
+                        </div>
+                        <div class="card-body">
+
+                            <form id="formPasajero">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">Nombre *</label>
-                                            <input type="text" class="form-control" name="nombre" id="clienteNombre" maxlength="50" required>
+                                            <input type="text" class="form-control" id="pasajeroNombre" required maxlength="50">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">Apellido Paterno *</label>
-                                            <input type="text" class="form-control" name="apellidoP" id="clienteApellidoP" maxlength="50" required>
+                                            <input type="text" class="form-control" id="pasajeroApellidoP" required maxlength="50">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">Apellido Materno</label>
-                                            <input type="text" class="form-control" name="apellidoM" id="clienteApellidoM" maxlength="50">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <h5 class="mb-3 text-primary">Contacto</h5>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Correo Electrónico *</label>
-                                            <input type="email" class="form-control" name="correo" id="clienteCorreo" maxlength="100" required>
-                                            <small class="form-text text-muted">Debe ser un correo válido</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Teléfono</label>
-                                            <input type="tel" class="form-control" name="telefono" id="clienteTelefono" pattern="[0-9]{10,15}" maxlength="15">
-                                            <small class="form-text text-muted">10-15 dígitos numéricos</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <h5 class="mb-3 text-primary">Dirección</h5>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="mb-3">
-                                            <label class="form-label">Calle</label>
-                                            <input type="text" class="form-control" name="calle" id="clienteCalle" maxlength="100">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Número</label>
-                                            <input type="text" class="form-control" name="numero" id="clienteNumero" maxlength="10" placeholder="Ej: 123, S/N">
+                                            <input type="text" class="form-control" id="pasajeroApellidoM" maxlength="50">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Colonia</label>
-                                            <input type="text" class="form-control" name="colonia" id="clienteColonia" maxlength="50">
+                                            <label class="form-label">Fecha de Nacimiento *</label>
+                                            <input type="date" class="form-control" id="pasajeroFechaNacimiento" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Ciudad</label>
-                                            <input type="text" class="form-control" name="ciudad" id="clienteCiudad" maxlength="50">
+                                            <label class="form-label">Nacionalidad</label>
+                                            <input type="text" class="form-control" id="pasajeroNacionalidad" value="Mexicana" maxlength="50">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Estado</label>
-                                            <input type="text" class="form-control" name="estado" id="clienteEstado" maxlength="50">
+                                            <label class="form-label">Pasaporte</label>
+                                            <input type="text" class="form-control" id="pasajeroPasaporte" maxlength="50" placeholder="Opcional">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Código Postal</label>
-                                            <input type="text" class="form-control" name="codigoPostal" id="clienteCodigoPostal" maxlength="10" placeholder="Ej: 12345">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Guardar Cliente
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-primary" onclick="continuarConPasajero()">
+                                        <i class="fas fa-arrow-right"></i> Continuar
                                     </button>
-                                    <button type="button" class="btn btn-secondary" onclick="resetClienteForm()">
-                                        <i class="fas fa-times"></i> Cancelar
+                                    <button type="button" class="btn btn-outline-secondary" onclick="copiarDatosCliente()">
+                                        <i class="fas fa-copy"></i> Usar datos del cliente
                                     </button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
-                    <div class="card mt-4">
-                        <div class="card-header bg-primary text-white">
-                            <i class="fas fa-list"></i> Lista de Clientes
+                    <!-- Método de Pago -->
+                    <div class="card mt-4" id="metodoPagoCard" style="display:none;">
+                        <div class="card-header bg-warning text-dark">
+                            <i class="fas fa-credit-card"></i> Paso 5: Método de Pago
                         </div>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    <input type="text" class="form-control" id="buscarCliente" placeholder="Buscar por nombre, correo o ciudad...">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Método de Pago *</label>
+                                        <select class="form-control" id="metodoPagoSelect" required>
+                                            <option value="">Seleccione un método</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Canal de Venta</label>
+                                        <select class="form-control" id="canalVenta">
+                                            <option value="WEB">Web</option>
+                                            <option value="PRESENCIAL">Presencial</option>
+                                            <option value="TELEFONO">Teléfono</option>
+                                            <option value="MOVIL">Móvil</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre Completo</th>
-                                            <th>Email</th>
-                                            <th>Teléfono</th>
-                                            <th>Ciudad</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaClientes"></tbody>
-                                </table>
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-primary" onclick="continuarConPago()">
+                                    <i class="fas fa-arrow-right"></i> Continuar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmación Final -->
+                    <div class="card mt-4" id="confirmacionFinalCard" style="display:none;">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-clipboard-check"></i> Paso 6: Confirmación Final
+                        </div>
+                        <div class="card-body">
+
+                            <div id="resumenCompleto"></div>
+                            <div class="mt-4">
+                                <button class="btn btn-success btn-lg" onclick="procesarCompraFinal()">
+                                    <i class="fas fa-check-circle"></i> Confirmar y Procesar Compra
+                                </button>
+                                <button class="btn btn-secondary" onclick="cancelarProceso()">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resultado Final -->
+                    <div class="card mt-4" id="resultadoFinalCard" style="display:none;">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-ticket-alt"></i> ¡Compra Exitosa!
+                        </div>
+                        <div class="card-body">
+                            <div id="detallesBoleto"></div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary" onclick="nuevaCompra()">
+                                    <i class="fas fa-plus"></i> Nueva Compra
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -861,36 +1126,43 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Origen</label>
-                                            <input type="text" class="form-control" name="origen" required>
+                                            <label class="form-label">Aeropuerto de Origen *</label>
+                                            <select class="form-control" id="busquedaOrigen" required>
+                                                <option value="">Seleccione aeropuerto de origen</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Destino</label>
-                                            <input type="text" class="form-control" name="destino" required>
+                                            <label class="form-label">Aeropuerto de Destino *</label>
+                                            <select class="form-control" id="busquedaDestino" required>
+                                                <option value="">Seleccione aeropuerto de destino</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label">Fecha</label>
-                                            <input type="date" class="form-control" name="fecha" required>
+                                            <label class="form-label">Fecha de Viaje *</label>
+                                            <input type="date" class="form-control" id="busquedaFecha" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-search"></i> Buscar Vuelos
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-search"></i> Buscar Vuelos Disponibles
                                 </button>
                             </form>
                         </div>
                     </div>
 
+                    <!-- Resultados de búsqueda -->
                     <div class="card mt-4" id="resultadosBusqueda" style="display:none;">
-                        <div class="card-header bg-danger text-white">
+                        <div class="card-header bg-success text-white">
                             <i class="fas fa-plane"></i> Resultados de Búsqueda
                         </div>
                         <div class="card-body">
-                            <div id="listaResultados"></div>
+                            <div id="listaResultados" class="table-responsive">
+                                <!-- Los resultados se cargan dinámicamente desde busqueda.js -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -900,18 +1172,25 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Config & API -->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Config & Utilities -->
     <script src="config.js"></script>
+    <script src="validaciones.js"></script>
+    <script src="uppercase-handler.js"></script>
+    
     <!-- Main JS -->
     <script src="main.js"></script>
-    <!-- Modules -->
-    <script src="clientes.js"></script>
-    <script src="pasajeros.js"></script>
-    <script src="vuelos.js"></script>
-    <script src="instancias.js"></script>
-    <script src="reservas.js"></script>
-    <script src="boletos.js"></script>
-    <script src="ventas.js"></script>
+    
+    <!-- Módulos Unificados -->
+    <script src="configuracion.js"></script>
+    <script src="aeronaves.js"></script>
+    <script src="personal.js"></script>
+    <script src="comercial.js"></script>
+    <script src="operaciones-vuelo.js"></script>
+    <script src="gestion-ventas.js"></script>
+    <script src="proceso-compra.js"></script>
     <script src="busqueda.js"></script>
 </body>
 </html>

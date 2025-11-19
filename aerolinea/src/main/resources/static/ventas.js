@@ -232,16 +232,44 @@ function validarVenta(ventaData) {
     if (!ventaData.fechaVenta) {
         mostrarErrorCampoVenta('ventaFecha', 'La fecha de venta es requerida');
         esValido = false;
+    } else {
+        const fechaVenta = new Date(ventaData.fechaVenta);
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+        if (fechaVenta > hoy) {
+            mostrarErrorCampoVenta('ventaFecha', 'La fecha de venta no puede ser futura');
+            esValido = false;
+        }
     }
     
+    // Validar forma de pago - solo letras, espacios y guiones
     if (!ventaData.formaPago || ventaData.formaPago.trim().length === 0) {
         mostrarErrorCampoVenta('ventaFormaPago', 'La forma de pago es requerida');
         esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-]+$/.test(ventaData.formaPago)) {
+        mostrarErrorCampoVenta('ventaFormaPago', 'La forma de pago solo puede contener letras, espacios y guiones');
+        esValido = false;
     }
     
-    if (!ventaData.total || ventaData.total <= 0) {
-        mostrarErrorCampoVenta('ventaTotal', 'El total debe ser mayor a 0');
+    // Validar canal de venta - solo letras, espacios y guiones (opcional)
+    if (ventaData.canalVenta && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s\-]+$/.test(ventaData.canalVenta)) {
+        mostrarErrorCampoVenta('ventaCanal', 'El canal de venta solo puede contener letras, espacios y guiones');
         esValido = false;
+    }
+    
+    // Validar total - solo números decimales positivos
+    if (!ventaData.total) {
+        mostrarErrorCampoVenta('ventaTotal', 'El total es requerido');
+        esValido = false;
+    } else {
+        const total = parseFloat(ventaData.total);
+        if (isNaN(total) || total <= 0) {
+            mostrarErrorCampoVenta('ventaTotal', 'El total debe ser un número mayor a 0');
+            esValido = false;
+        } else if (total > 1000000) {
+            mostrarErrorCampoVenta('ventaTotal', 'El total no puede exceder $1,000,000');
+            esValido = false;
+        }
     }
     
     if (!ventaData.estadoVenta) {

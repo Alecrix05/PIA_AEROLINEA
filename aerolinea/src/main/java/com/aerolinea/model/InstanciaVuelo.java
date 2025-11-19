@@ -23,6 +23,7 @@ public class InstanciaVuelo {
     private LocalDateTime fechaLlegada;
 
     @NotBlank(message = "El estado del vuelo es requerido")
+    @Pattern(regexp = "^(PROGRAMADO|EN_VUELO|ATERRIZADO|CANCELADO|RETRASADO)$", message = "Estado válido: PROGRAMADO, EN_VUELO, ATERRIZADO, CANCELADO, RETRASADO")
     @Column(name = "estado_vuelo", length = 30)
     private String estadoVuelo;
 

@@ -14,15 +14,18 @@ public class Vuelo {
     private Integer idVuelo;
 
     @NotBlank(message = "El número de vuelo es requerido")
+    @Pattern(regexp = "^[A-Z]{2}[0-9]{3,4}$", message = "El número de vuelo debe tener formato: 2 letras seguidas de 3-4 números (ej: AM101)")
     @Column(name = "numero_vuelo", length = 20)
     private String numeroVuelo;
 
+    @NotBlank(message = "La duración es requerida")
+    @Pattern(regexp = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$", message = "La duración debe tener formato HH:MM:SS")
     @Column(name = "duracion")
     private String duracion; // Se guardará en formato HH:MM:SS
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ruta")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "origen", "destino"})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Ruta ruta;
 
     // Getters y Setters

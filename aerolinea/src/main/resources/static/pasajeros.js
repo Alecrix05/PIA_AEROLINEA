@@ -122,35 +122,69 @@ function validarPasajero(pasajeroData) {
     limpiarErroresValidacionPasajero();
     let esValido = true;
     
+    // Validar nombre - solo letras y espacios
     if (!pasajeroData.nombre || pasajeroData.nombre.trim().length === 0) {
         mostrarErrorCampoPasajero('pasajeroNombre', 'El nombre es requerido');
+        esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(pasajeroData.nombre)) {
+        mostrarErrorCampoPasajero('pasajeroNombre', 'El nombre solo puede contener letras y espacios');
         esValido = false;
     } else if (pasajeroData.nombre.length > 50) {
         mostrarErrorCampoPasajero('pasajeroNombre', 'El nombre no puede exceder 50 caracteres');
         esValido = false;
     }
     
+    // Validar apellido paterno - solo letras y espacios
     if (!pasajeroData.apellidoP || pasajeroData.apellidoP.trim().length === 0) {
         mostrarErrorCampoPasajero('pasajeroApellidoP', 'El apellido paterno es requerido');
+        esValido = false;
+    } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(pasajeroData.apellidoP)) {
+        mostrarErrorCampoPasajero('pasajeroApellidoP', 'El apellido paterno solo puede contener letras y espacios');
         esValido = false;
     } else if (pasajeroData.apellidoP.length > 50) {
         mostrarErrorCampoPasajero('pasajeroApellidoP', 'El apellido paterno no puede exceder 50 caracteres');
         esValido = false;
     }
     
-    if (pasajeroData.apellidoM && pasajeroData.apellidoM.length > 50) {
-        mostrarErrorCampoPasajero('pasajeroApellidoM', 'El apellido materno no puede exceder 50 caracteres');
-        esValido = false;
+    // Validar apellido materno - solo letras y espacios (opcional)
+    if (pasajeroData.apellidoM) {
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(pasajeroData.apellidoM)) {
+            mostrarErrorCampoPasajero('pasajeroApellidoM', 'El apellido materno solo puede contener letras y espacios');
+            esValido = false;
+        } else if (pasajeroData.apellidoM.length > 50) {
+            mostrarErrorCampoPasajero('pasajeroApellidoM', 'El apellido materno no puede exceder 50 caracteres');
+            esValido = false;
+        }
     }
     
+    // Validar fecha de nacimiento
     if (!pasajeroData.fechaNacimiento) {
         mostrarErrorCampoPasajero('pasajeroFechaNac', 'La fecha de nacimiento es requerida');
         esValido = false;
+    } else {
+        const fechaNac = new Date(pasajeroData.fechaNacimiento);
+        const hoy = new Date();
+        if (fechaNac > hoy) {
+            mostrarErrorCampoPasajero('pasajeroFechaNac', 'La fecha de nacimiento no puede ser futura');
+            esValido = false;
+        }
     }
     
-    if (pasajeroData.pasaporte && pasajeroData.pasaporte.length > 50) {
-        mostrarErrorCampoPasajero('pasajeroPasaporte', 'El pasaporte no puede exceder 50 caracteres');
+    // Validar nacionalidad - solo letras y espacios (opcional)
+    if (pasajeroData.nacionalidad && !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(pasajeroData.nacionalidad)) {
+        mostrarErrorCampoPasajero('pasajeroNacionalidad', 'La nacionalidad solo puede contener letras y espacios');
         esValido = false;
+    }
+    
+    // Validar pasaporte - alfanumérico (opcional)
+    if (pasajeroData.pasaporte) {
+        if (!/^[a-zA-Z0-9]+$/.test(pasajeroData.pasaporte)) {
+            mostrarErrorCampoPasajero('pasajeroPasaporte', 'El pasaporte solo puede contener letras y números sin espacios');
+            esValido = false;
+        } else if (pasajeroData.pasaporte.length > 50) {
+            mostrarErrorCampoPasajero('pasajeroPasaporte', 'El pasaporte no puede exceder 50 caracteres');
+            esValido = false;
+        }
     }
     
     return esValido;

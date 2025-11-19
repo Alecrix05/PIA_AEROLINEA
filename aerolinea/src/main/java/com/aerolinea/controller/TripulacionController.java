@@ -44,4 +44,32 @@ public class TripulacionController {
 
         return tripulacionService.save(tripulacion);
     }
+
+    @GetMapping("/{id}")
+    public Tripulacion obtener(@PathVariable Integer id) {
+        return tripulacionService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Tripulacion actualizar(@PathVariable Integer id, @RequestBody Tripulacion tripulacion) {
+        if (tripulacion.getPiloto() != null && tripulacion.getPiloto().getIdEmpleado() != null) {
+            Empleado piloto = empleadoRepository
+                    .findById(tripulacion.getPiloto().getIdEmpleado())
+                    .orElse(null);
+            tripulacion.setPiloto(piloto);
+        }
+
+        if (tripulacion.getCopiloto() != null && tripulacion.getCopiloto().getIdEmpleado() != null) {
+            Empleado copiloto = empleadoRepository
+                    .findById(tripulacion.getCopiloto().getIdEmpleado())
+                    .orElse(null);
+            tripulacion.setCopiloto(copiloto);
+        }
+        return tripulacionService.update(id, tripulacion);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        tripulacionService.deleteById(id);
+    }
 }
